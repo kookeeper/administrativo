@@ -1,0 +1,92 @@
+Arquivo de log de alterações
+
+  18/05/2009    - Versão 0.6.0
+
+- Correção      - Ajuste em pcnNFeR para a correta leitura das tag do tipo: "CNPJ ou CPF"
+- Correção      - Ajuste em pcnNFeR para a correta leitura da tag "ICMSComb"
+- Correção      - Ajuste em pcnNFeR para a correta leitura das tag do grupo "cobr"
+- Implementação - Adição em pcnAuxiliar;  função DateTimeTodh, para conversão dos campos AAAA-MM-DDTHH:MM:SS
+- Correção      - Ajuste em pcnConsCad; Estava consCad e o correto é ConsCad
+- Implementação - Adição em pcnConversao; TpcnTipoCampo Novo tipo: tcDatHor
+- Correção      - Ajuste em pcnInutNFe; Correção no tamanho da tag "INUTILIZAR"
+- Implementação - Adição em pcnLeitor; Ajustes para a leitura do campo tipo tcDatHor
+- Alteração     - Alteração em pcnRetCancNFe; Mundança no tipo da TAG FdhRecbto para tcDatHor
+- Alteração     - Alteração em pcnRetConsCad; Mundança no tipo da TAG FdhCons para tcDatHor
+- Alteração     - Alteração em pcnRetConsReciNFe; Mundança no tipo da TAG FdhRecbto para tcDatHor
+- Alteração     - Alteração em pcnRetConsSitNFe; Mundança no tipo da TAG FdhRecbto para tcDatHor
+- Alteração     - Alteração em pcnRetConsStatServ; Mundança no tipo da TAG FdhRecbto para tcDatHor
+- Alteração     - Alteração em pcnRetConsStatServ; Mundança no tipo da TAG FdhRetorno para tcDatHor
+- Alteração     - Alteração em pcnRetEnvNFe; Mundança no tipo da TAG FdhRecbto para tcDatHor
+- Alteração     - Alteração em pcnRetInutNFe; Mundança no tipo da TAG FdhRecbto para tcDatHor
+
+  02/05/2009    - Versão 0.5.0
+
+- Correção      - Geração da TAG <ICMSComb>
+
+  16/04/2009    - Versão 0.4.1
+
+- Implementação - Função para validar a TAG <cListServ>
+- Correção      - Alterações para corrigir mensagens WARNINGS do compilador 
+                  (correções não críticas)  
+
+  14/04/2009    - Versão 0.4.0
+
+- Implementação - pcnAuxiliar.pas - Função: GerarCodigoNumerico
+- Implementação - pcnProcNFe.pas - Possibilita a geração do arquivo de compartilhamento
+                  a partir do arquivo *-Sit.xml
+- Correção      - pcnLayoutTXT.pas - Geração do arquivo do formato TXT
+- Correção      - pcnNFe.pas - inclusão de Fsignature.Free liberando a memória
+- Correção      - pcnNFeW.pas - Alteração no tipo da TAG "mod" para gravar o campo com 2 casas
+- Correção      - pcnNFeW.pas - Alteração nos Grupos L01 e L101
+- Correção      - Geração do arquivo do formato TXT
+- Alteração     - pcnAuxiliar.pas - Função: GerarChave
+                  Se o parametro CodigoNumerico for = -1 a função usa GerarCodigoNumerico 
+                  na geração da chave
+ 
+  04/04/2009    - Versão 0.3.0
+
+- Correção      - Geração do arquivo do formato TXT
+- Correção      - Geração do arquivo de compartilhamento unit pcnProcNFe.pas
+- Alteração     - Modo de geração da NF referenciadas
+- Implementação - Opção para validar as inscrições em pcnNFeW
+- Implementação - Função para validar inscrição SUFRAMA em pncNFeW
+
+  29/03/2009    - Versão 0.2.0
+
+- Ajustes       - Units pcnRet*.pas
+- Correção      - Geração do arquivo de compartilhamento unit pcnProcNFe.pas
+- Correção      - Geração da TAG <PISOutr>
+- Correção      - Geração da TAG <COFINSOutr>
+- Correção      - Geração da TAG <ICMS40>
+
+  26/03/2009    - Versão 0.1.0
+
+- Versão inicial
+
+ ----------------------------
+  Sobre as versões
+ ----------------------------
+  
+  O que significa os numeros?
+
+  Versão X.Y.Z
+
+  onde:
+
+  X - Numero maior da versão, representa uma versão em si,
+      somente muda quando ocorrem mudanças substânciais 
+      no código. 
+      (Cabe ao usuário decidir se vai usar a nova versão)
+
+  Y - Numero menor da versão, indica alterações dentro
+      da versão anterior. Esse numero será alterado sempre que houver
+      correções de Bug's ou alterações que alterem a usabilidade
+      de versão anterior. 
+      (Os usuários devem atualizar a sua versão)
+
+  Z - Revisão, indica revisões no código da versão anterior. Esse numero
+      sera alterado sempre que forem feitas alterações no código; 
+      desde que essas alterações não mudem a usabilidade do código.
+      Também pode ser utilizada no caso de adicição de novas funcionalidades
+      ao código, documentação e demos.
+      (Os usuários não são obrigados a atualizar a sua versão)

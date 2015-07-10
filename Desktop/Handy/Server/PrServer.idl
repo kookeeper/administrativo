@@ -1,0 +1,91 @@
+[
+  uuid(8261428C-B579-450F-A9AD-7C9DB4B52519), 
+  version(1.0), 
+  helpstring("PrServer Library")
+    
+]
+library PrServer
+{
+
+  importlib("midas.dll");
+  importlib("stdole2.tlb");
+
+  [
+    uuid(F230AF25-3471-4CFE-AB30-8A1CD8E9BA43), 
+    version(1.0), 
+    helpstring("Dispatch interface for Server Object"), 
+    dual, 
+    oleautomation
+  ]
+   interface IServer: IAppServer
+  {
+    [
+    id(0x00000131)
+    ]
+    HRESULT _stdcall ApagaRegistro([in] VARIANT CAMPOS, [out, retval] BSTR * Result );
+    [
+    id(0x00000137)
+    ]
+    HRESULT _stdcall CriaLista([in] BSTR Sql );
+    [
+    id(0x00000141)
+    ]
+    HRESULT _stdcall ExecSQL([in] BSTR Sql );
+    [
+    id(0x00000143)
+    ]
+    HRESULT _stdcall ExecSQL2([in] BSTR Sql );
+    [
+    id(0x0000012D)
+    ]
+    HRESULT _stdcall BurcarImagemProduto([in] long produto_sq );
+  };
+
+  [
+    uuid(A655A3E7-D825-4A1B-BE06-453254930503), 
+    version(1.0), 
+    helpstring("Server Object")
+  ]
+  coclass Server
+  {
+    [default] interface IServer;
+  };
+
+  [
+    uuid(525932DB-4B4D-44D5-9A1F-50947D59D1F6), 
+    version(1.0), 
+    helpstring("Dispatch interface for ServerTeste Object"), 
+    dual, 
+    oleautomation
+  ]
+   interface IServerTeste: IAppServer
+  {
+    [
+    id(0x00000131)
+    ]
+    HRESULT _stdcall ApagaRegistro([in] VARIANT CAMPOS, [out, retval] BSTR * Result );
+    [
+    id(0x00000137)
+    ]
+    HRESULT _stdcall CriaLista([in] BSTR Sql );
+    [
+    id(0x00000141)
+    ]
+    HRESULT _stdcall ExecSQL([in] BSTR Sql );
+    [
+    id(0x00000143)
+    ]
+    HRESULT _stdcall ExecSQL2([in] BSTR Sql );
+  };
+
+  [
+    uuid(2D21DFE6-064C-4D3C-9561-DECB37B86046), 
+    version(1.0), 
+    helpstring("ServerTeste Object")
+  ]
+  coclass ServerTeste
+  {
+    [default] interface IServerTeste;
+  };
+
+}; 

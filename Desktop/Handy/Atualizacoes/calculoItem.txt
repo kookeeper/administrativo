@@ -1,0 +1,62 @@
+carrega as variaveis:
+
+	AliqIPI (do cadastro de NCM)
+	AliqICMS (do cadastro de NCM)
+	AliqIVA (do cadastro de estado, se não encontrar, busca do cadastro de NCM)
+    VlrUnitReal (valor unitario * cotacao do dolar)
+	
+	se o tipo da natureza for diferente de 04 (diferente de importacao) faça:
+		se o cliente não tiver inscricao estadual, se o cliente for final ou se o cliente tiver ISENTO na inscricao estadual:
+			AliqICMS (busca da tela de parametros, para produtos ou peça)
+		senao:
+			se for cliente do mesmo estado:
+				AliqICMS (busca do cadastro de NCM)
+			senao:
+				AliqICMS (busca da natureza)
+			:fim
+		:fim
+	:fim
+
+	Se o cadastro de natureza estiver com Isensao de IPI, zera a AliqIPI.
+	Se o cadastro de natureza estiver com Isensao de ICMS, zera a AliqICMS.
+
+	ValorTotal = ValorUnitario * Quantidade + Juros - Desconto.
+
+	BaseIPI = ValorTotal + ValorFrete + ValorSeguro + ValorOutros
+
+	ValorIPIProd = (ValorTotal * AliqIPI / (100 + AliqIPI)) / 100
+
+	ValorIPIDesp = (ValorFrete + ValorSeguro + ValorOutros) * AliqIPI / 100
+
+	ValorIPITotal = ValorIPIProd + ValorIPIDesp
+
+	Se a empresa estiver no codigo de regime tributario menor que 3:
+		BaseICMS = 0
+	senao:
+		se o tipo do cliente for final:
+			BaseICMS = BaseIPI + ValorIPIDesp
+ 
+		senao:
+			BaseICMS = BaseIPI - ValorIPIProd
+		:fim
+	:fim
+  
+	se a condição de pagamento tiver parcelas = 0:
+		BaseICMS = 0 (quando a natureza for do tipo: SimplesRemessa, Retorno, Remessa, Demonstracao ou Outros)
+	:fim
+
+	ValorICMS := BaseICMS * AliqICMS / 100
+
+	ValorUnitarioIPI = ValorIPIProd / Quantidade
+	ValorUnitarioSemIpi = VlrUnitReal - (valorDesconto / Quantidade) - ValorUnitarioIPI
+	ValorTotalSemIpi = ValorTotal - ValorIPIProd
+  
+	Se a natureza tiver CFO de substituição e AliqIVA for maior que zero:
+		AliqIcmsIntra = Aliquota de ICMS intra, cadastrada no estado
+		BaseICMSSubst = (ValorTotal + ValorFrete + ValorSeguro + ValorOutros + ValorIPIDesp
+) * (1 + AliqIVA/100)
+		ValorICMSSubst = BaseICMSSubst * AliqIcmsIntra/100 - ValorICMS
+		Se o ValorICMSSubst for menor que zero:
+			ValorICMSSubst = 0
+		:fim
+	:fim

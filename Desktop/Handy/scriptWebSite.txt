@@ -1,0 +1,897 @@
+CREATE DATABASE `gerad` /*!40100 DEFAULT CHARACTER SET latin1 */;
+
+DROP TABLE IF EXISTS `gerad`.`empresa`;
+CREATE TABLE  `gerad`.`empresa` (
+  `EMPRESA_SQ` int(11) NOT NULL auto_increment primary key,
+  `CODIGO_EMPRESA` varchar(15) NOT NULL unique key,
+  `NOME_EMPRESA` varchar(50) NOT NULL,
+  `ACESSOS` int(11) default NULL,
+  `SENHA` varchar(14) default NULL,
+  `NUMERO_NFISCAL` int(11) default NULL,
+  `ESTADO` varchar(2) default NULL,
+  `NUMERO_PEDIDO` int(11) default NULL,
+  `ALT_DATA_PEDIDO` varchar(1) default NULL,
+  `ALT_DTEMISSAO_NFISCAL` varchar(1) default NULL,
+  `ALIQ_ICMS_PROD1` decimal(9,2) default NULL,
+  `ALIQ_ICMS_PEC1` decimal(9,2) default NULL,
+  `STRIBUT` int(11) default NULL,
+  `ALT_NR_PEDIDO` varchar(1) default NULL,
+  `ALT_NR_NFISCAL` varchar(1) default NULL,
+  `DIAS_DEMONSTRACAO` int(11) default NULL,
+  `NUMERO_ASSISTENCIA` int(11) default NULL,
+  `ALIQ_PIS` decimal(9,2) default NULL,
+  `ALIQ_COFINS` decimal(9,2) default NULL,
+  `ULTIMA_CLASSIFICACAO` timestamp NOT NULL default '0000-00-00 00:00:00',
+  `AAMM_CLASSIFICACAO` int(6) default NULL,
+  `ALIQ_ISS` decimal(9,2) default NULL,
+  `MARGEM_ESQ_NF` decimal(4,2) default NULL,
+  `MARGEM_SUP_NF` decimal(4,2) default NULL,
+  `BANCO_IMAGENS` varchar(50) default NULL,
+  `baixa_estoque_pedido` char(1) default 'N',
+  `juros_receber` decimal(5,2) default NULL,
+  `numero_rma` int(11) default '0',
+  `estoque_negativo` varchar(1) default 'S',
+  `descricao_estoque1` varchar(100) default 'Loja',
+  `descricao_estoque2` varchar(100) default 'Armazem',
+  `descricao_estoque3` varchar(100) default 'Demonstrao',
+  `descricao_estoque4` varchar(100) default 'Defeito',
+  `descricao_estoque5` varchar(100) default 'Em uso',
+  `descricao_estoque6` varchar(100) default 'Backup',
+  `descricao_estoque7` varchar(100) default 'Demonstrao em cliente',
+  `descricao_estoque8` varchar(100) default 'HLC',
+  `descricao_estoque9` varchar(100) default NULL,
+  `descricao_estoque10` varchar(100) default NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `gerad`.`acesso`;
+CREATE TABLE  `gerad`.`acesso` (
+  `acesso_sq` int(11) NOT NULL auto_increment primary key,
+  empresa_sq int(11) not null references empresa (empresa_sq),
+  `nome_programa` varchar(100) character set latin1 collate latin1_bin NOT NULL,
+  `usuario_sq` int(11) not null references usuario (usuario_sq),
+  unique key (empresa_sq, nome_programa)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+drop table if exists `gerad`.`acesso_tipo`;
+create table `gerad`.`acesso_tipo` (
+  acesso_tipo_sq int(11) not null auto_increment primary key,
+  acesso_sq int(11) not null references acesso (acesso_sq),
+  tipo_acesso int(2) default null
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `gerad`.`agenda`;
+CREATE TABLE  `gerad`.`agenda` (
+  `AGENDA_SQ` int(11) NOT NULL auto_increment primary key,
+  empresa_sq int(11) not null references empresa (empresa_sq),
+  `DATA_AGENDA` timestamp NOT NULL default CURRENT_TIMESTAMP,
+  `VENDEDOR_SQ` int(11) NOT NULL references vendedor (vendedor_sq),
+  `CLIENTE_SQ` int(11) NOT NULL references cliente (cliente_sq),
+  `OBSERVACAO` text,
+  `REALIZADO` varchar(1) default 'N',
+  `USUARIO_PAI_SQ` int(11) default NULL,
+  UNIQUE KEY (`DATA_AGENDA`,`VENDEDOR_SQ`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `gerad`.`assistencia`;
+CREATE TABLE  `gerad`.`assistencia` (
+  `ASSISTENCIA_SQ` int(11) NOT NULL auto_increment primary key,
+  empresa_sq int(11) not null references empresa (empresa_sq),
+  `NUMERO_ASSISTENCIA` int(11) NOT NULL,
+  `DATA_CHAMADO` timestamp NOT NULL default '0000-00-00 00:00:00',
+  `DATA_ASSISTENCIA` timestamp NOT NULL default '0000-00-00 00:00:00',
+  `COTACAO_DOLAR` decimal(9,2) default NULL,
+  `CLIENTE_SQ` int(11) NOT NULL references cliente (cliente_sq),
+  `COND_PAGTO_SQ` int(11) default NULL references cond_pagto (cond_pagto_sq),
+  `DESP_CHAMADO` decimal(9,2) default NULL,
+  `DESP_HTEC_AD` decimal(9,2) default NULL,
+  `DESP_DESLOC` decimal(9,2) default NULL,
+  `VLR_PECAS` decimal(9,2) default NULL,
+  `VLR_TOTAL` decimal(9,2) default NULL,
+  `HORA_INICIO` time NOT NULL,
+  `HORA_FIM` time default NULL,
+  `GARANTIA` varchar(1) default NULL,
+  `CONTRATO` varchar(1) default NULL,
+  `vendedor_sq` int(11) NOT NULL references vendedor (vendedor_sq),
+  `FRETE` varchar(1) default NULL,
+  UNIQUE KEY (empresa_sq, `NUMERO_ASSISTENCIA`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `gerad`.`assistencia_equip`;
+CREATE TABLE  `gerad`.`assistencia_equip` (
+  `ASSISTENCIA_EQUIP_SQ` int(11) NOT NULL auto_increment primary key,
+  `ASSISTENCIA_SQ` int(11) NOT NULL references assistencia (assistencia_sq),
+  `PRODUTO_SQ` int(11) NOT NULL references produto (produto_sq),
+  `NR_SERIE_EQUIP` text,
+  `defeito` text,
+  `servicos` text
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `gerad`.`assistencia_item`;
+CREATE TABLE  `gerad`.`assistencia_item` (
+  `ASSISTENCIA_ITEM_SQ` int(11) NOT NULL auto_increment primary key,
+  `PRODUTO_SQ` int(11) NOT NULL references produto (produto_sq),
+  `QTDE_ASSISTENCIA_ITEM` int(11) NOT NULL,
+  `PRECO_UNIT` decimal(9,2) default NULL,
+  `assistencia_equip_sq` int(11) NOT NULL references assistencia_equip (assistencia_equip_sq)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `gerad`.`classificacao`;
+CREATE TABLE  `gerad`.`classificacao` (
+  `CLASSIFICACAO_SQ` int(11) NOT NULL auto_increment primary key,
+  empresa_sq int(11) not null references empresa (empresa_sq),
+  `CODIGO_CLASSIFICACAO` varchar(50) character set latin1 collate latin1_bin NOT NULL,
+  `LIMITE_MINIMO` decimal(9,2) NOT NULL,
+  `LIMITE_MAXIMO` decimal(9,2) default NULL,
+  `MESES_BONUS` int(2) default NULL,
+  UNIQUE KEY (empresa_sq, `CODIGO_CLASSIFICACAO`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `gerad`.`cliente`;
+CREATE TABLE  `gerad`.`cliente` (
+  `CLIENTE_SQ` int(11) NOT NULL auto_increment primary key,
+  empresa_sq int(11) not null references empresa (empresa_sq),
+  `CODIGO_CLIENTE` varchar(15) character set latin1 collate latin1_bin NOT NULL,
+  `NOME_CLIENTE` varchar(50) NOT NULL,
+  `INSCR_ESTADUAL` varchar(20) default NULL,
+  `E_MAIL` varchar(100) default NULL,
+  `WEB_SITE` varchar(100) default NULL,
+  `CONTATO` varchar(50) default NULL,
+  `PAIS` varchar(20) default NULL,
+  `OBSERVACAO` text,
+  `REVENDA` varchar(1) default NULL,
+  `BIRO` varchar(1) default NULL,
+  `CAPITAL_ATUAL` decimal(9,2) default NULL,
+  `NOME_FANTASIA` varchar(50) default NULL,
+  `RAMO_ATIVIDADE_SQ` int(11) default NULL,
+  `FATURAMENTO_MENSAL` decimal(9,2) default NULL,
+  `DATA_FUNDACAO` timestamp NULL default NULL,
+  `INSCR_MUNICIPAL` varchar(20) default NULL,
+  `DATA_CADASTRO` timestamp NULL default NULL,
+  `DATA_ALT` timestamp NULL default NULL,
+  `USUARIO_SQ_ALT` int(11) default NULL references usuario (usuario_sq),
+  `TRANSPORTADORA_SQ` int(11) default NULL references transportadora (transportadora_sq),
+  `CLASSIFICACAO_SQ` int(11) default NULL references classificacao (classificacao_sq),
+  `tipo_cliente_sq` int(11) default NULL references tipo_cliente (tipo_cliente_sq),
+  `vendedor_sq` int(11) default NULL references vendedor (vendedor_sq),
+  UNIQUE KEY (empresa_sq, `CODIGO_CLIENTE`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `gerad`.`tipo_endereco`;
+CREATE TABLE  `gerad`.`tipo_endereco` (
+  tipo_endereco_sq int(11) not null auto_increment primary key,
+  empresa_sq int(11) not null references empresa (empresa_sq),
+  tipo_endereco varchar(100) not null,
+  unique key (empresa_sq, tipo_endereco)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `gerad`.`tipo_telefone`;
+CREATE TABLE  `gerad`.`tipo_telefone` (
+  tipo_telefone_sq int(11) not null auto_increment primary key,
+  empresa_sq int(11) not null references empresa (empresa_sq),
+  tipo_telefone varchar(100) not null,
+  unique key (empresa_sq, tipo_telefone)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `gerad`.`cliente_endereco`;
+CREATE TABLE  `gerad`.`cliente_endereco` (
+  cliente_endereco_sq int(11) not null auto_increment primary key,
+  cliente_sq int(11) not null references cliente (cliente_sq),
+  endereco_sq int(11) not null references endereco (endereco_sq)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `gerad`.`cliente_telefone`;
+CREATE TABLE  `gerad`.`cliente_telefone` (
+  cliente_telefone_sq int(11) not null auto_increment primary key,
+  cliente_sq int(11) not null references cliente (cliente_sq),
+  telefone_sq int(11) not null references telefone (telefone_sq)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `gerad`.`endereco`;
+CREATE TABLE  `gerad`.`endereco` (
+  endereco_sq int(11) not null auto_increment primary key,
+  empresa_sq int(11) not null references empresa (empresa_sq),
+  tipo_endereco_sq int(11) not null references tipo_endereco (tipo_endereco_sq),
+  `ENDERECO` varchar(50) default NULL,
+  `NUMERO` varchar(20) default NULL,
+  `BAIRRO` varchar(30) default NULL,
+  `COMPL_ENDERECO` varchar(50) default NULL,
+  `CIDADE` varchar(30) default NULL,
+  `ESTADO` varchar(2) default NULL,
+  `CEP` varchar(8) default NULL,
+  `PAIS` varchar(20) default NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `gerad`.`telefone`;
+CREATE TABLE  `gerad`.`telefone` (
+  telefone_sq int(11) not null auto_increment primary key,
+  empresa_sq int(11) not null references empresa (empresa_sq),
+  tipo_telefone_sq int(11) not null references tipo_telefone (tipo_telefone_sq),
+  `DDD_FONE1` varchar(4) default NULL,
+  `NUMERO_FONE1` varchar(15) default NULL,
+  `COMPL_FONE1` varchar(10) default NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `gerad`.`cond_pagto`;
+CREATE TABLE  `gerad`.`cond_pagto` (
+  `COND_PAGTO_SQ` int(11) NOT NULL auto_increment primary key,
+  empresa_sq int(11) not null references empresa (empresa_sq),
+  `CODIGO_COND_PAGTO` int(11) NOT NULL,
+  `DESCRICAO_COND_PAGTO` varchar(50) NOT NULL,
+  UNIQUE KEY (empresa_sq, `CODIGO_COND_PAGTO`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `gerad`.`cond_pagto_parcela`;
+CREATE TABLE  `gerad`.`cond_pagto_parcela` (
+  cond_pagto_parcela_sq int(11) NOT NULL auto_increment primary key,
+  cond_pagto_sq int(11) not null references cond_pagto (cond_pagto_sq),
+  dias int(11) default null,
+  porcentagem int(3) default null,
+  unique key (cond_pagto_sq, dias)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `gerad`.`conta_banco`;
+CREATE TABLE  `gerad`.`conta_banco` (
+  `conta_banco_sq` int(11) NOT NULL auto_increment primary key,
+  empresa_sq int(11) not null references empresa (empresa_sq),
+  `nome_banco` varchar(50) NOT NULL,
+  `nome_agencia` varchar(50) default NULL,
+  `numero_conta` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `gerad`.`contas_pagar`;
+CREATE TABLE  `gerad`.`contas_pagar` (
+  `conta_pagar_sq` int(11) NOT NULL auto_increment primary key,
+  empresa_sq int(11) not null references empresa (empresa_sq),
+  `fornecedor_sq` int(11) NOT NULL references fornecedor (fornecedor_sq),
+  `numero_duplicata` varchar(20) NOT NULL,
+  `valor_duplicata` decimal(9,2) default NULL,
+  `dtcadastro_duplicata` datetime NOT NULL,
+  `dtvencimento_duplicata` datetime NOT NULL,
+  `observacao` blob,
+  `conta_pagar_auto_sq` int(11) default NULL references conta_pagar_auto (conta_pagar_auto_sq),
+  `referencia_auto` int(4) default NULL,
+  `dt_pgto` datetime default NULL,
+  `valor_pgto` decimal(9,2) default NULL,
+  `valor_desconto` decimal(9,2) default NULL,
+  `valor_juros` decimal(9,2) default NULL,
+  `forma_pgto` varchar(20) default NULL,
+  `conta_banco_sq` int(11) default NULL references conta_banco (conta_banco_sq),
+  UNIQUE KEY `contas_pagar_1` (`fornecedor_sq`,`numero_duplicata`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `gerad`.`conta_pagar_auto`;
+CREATE TABLE  `gerad`.`conta_pagar_auto` (
+  `conta_pagar_auto_sq` int(11) NOT NULL auto_increment primary key,
+  empresa_sq int(11) not null references empresa (empresa_sq),
+  `fornecedor_sq` int(11) NOT NULL references fornecedor (fornecedor_sq),
+  `valor` decimal(9,2) NOT NULL,
+  `data_inicial` datetime NOT NULL,
+  `parcelas` int(11) NOT NULL,
+  `observacao` blob
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `gerad`.`conta_pagar_pgto`;
+CREATE TABLE  `gerad`.`conta_pagar_pgto` (
+  `conta_pagar_pgto_sq` int(11) NOT NULL auto_increment primary key,
+  `conta_pagar_sq` int(11) NOT NULL references conta_pagar (conta_pagar_sq),
+  `dt_pgto` datetime NOT NULL,
+  `valor_pgto` decimal(9,2) NOT NULL,
+  `forma_pgto` varchar(20) default NULL,
+  `observacao` varchar(100) default NULL,
+  `banco` varchar(10) default NULL,
+  `conta` varchar(20) default NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `gerad`.`contato`;
+CREATE TABLE  `gerad`.`contato` (
+  `CONTATO_SQ` int(11) NOT NULL auto_increment primary key,
+  `DATA_CONTATO` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+  `CLIENTE_SQ` int(11) NOT NULL references cliente (cliente_sq),
+  `VENDEDOR_SQ` int(11) NOT NULL references vendedor (vendedor_sq),
+  `OBSERVACAO` text,
+  `TIPO_CONTATO` varchar(1) default NULL,
+  `FORMA_CONTATO` varchar(1) default NULL,
+  `NFISCAL_ITEM_SQ` int(11) default NULL references nfiscal_item (nfiscal_item_sq),
+  `QTDE_PRODUTOS` int(11) default '0',
+  UNIQUE KEY (`DATA_CONTATO`,`CLIENTE_SQ`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `gerad`.`conteiner`;
+CREATE TABLE  `gerad`.`conteiner` (
+  `conteiner_sq` int(11) NOT NULL auto_increment primary key,
+  empresa_sq int(11) not null references empresa (empresa_sq),
+  `invoice_number` varchar(20) NOT NULL,
+  `data_remessa` timestamp NOT NULL default '0000-00-00 00:00:00',
+  `data_chegada` timestamp NOT NULL default '0000-00-00 00:00:00',
+  `tipo_envio` varchar(1) NOT NULL,
+  `conhecimento` varchar(20) default NULL,
+  `observacao` text,
+  UNIQUE KEY (empresa_sq, `invoice_number`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `gerad`.`conteiner_item`;
+CREATE TABLE  `gerad`.`conteiner_item` (
+  `conteiner_item_sq` int(11) NOT NULL auto_increment primary key,
+  `conteiner_sq` int(11) NOT NULL references conteiner (conteiner_sq),
+  `produto_sq` int(11) NOT NULL references produto (produto_sq),
+  `quantidade` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `gerad`.`conta_receber`;
+CREATE TABLE  `gerad`.`conta_receber` (
+  `conta_receber_sq` int(11) NOT NULL auto_increment primary key,
+  empresa_sq int(11) not null references empresa (empresa_sq),
+  `NUMERO_DUPLICATA` int(11) NOT NULL,
+  `ITEM_DUPLICATA` int(11) NOT NULL,
+  `SEQ_DUPLICATA` int(11) default NULL,
+  `NFISCAL_SQ` int(11) default NULL references nfiscal (nfiscal_sq),
+  `VALOR_DUPLICATA` decimal(9,2) default NULL,
+  `DTEMISSAO_DUPLICATA` datetime NOT NULL,
+  `DTVENCTO_DUPLICATA` datetime NOT NULL,
+  `juros_duplicata` decimal(10,2) default NULL,
+  `desconto_duplicata` decimal(10,2) default NULL,
+  UNIQUE KEY (empresa_sq, `NUMERO_DUPLICATA`,`ITEM_DUPLICATA`,`SEQ_DUPLICATA`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `gerad`.`conta_receber_pgto`;
+CREATE TABLE  `gerad`.`conta_receber_pgto` (
+  `conta_receber_pgto_sq` int(11) NOT NULL auto_increment primary key,
+  `conta_receber_sq` int(11) NOT NULL references conta_receber (conta_receber_sq),
+  `dt_pgto` datetime NOT NULL,
+  `valor_pgto` decimal(9,2) NOT NULL,
+  `forma_pgto` varchar(10) default NULL,
+  `observacao` varchar(100) default NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `gerad`.`estado`;
+CREATE TABLE  `gerad`.`estado` (
+  `estado_sq` int(11) NOT NULL auto_increment primary key,
+  empresa_sq int(11) not null references empresa (empresa_sq),
+  `codigo_estado` varchar(2) NOT NULL,
+  `aliq_icms_intra` decimal(5,2) NOT NULL,
+  `descricao_estado` varchar(50) NOT NULL,
+  `codigo_ibge` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `gerad`.`estado_iva`;
+CREATE TABLE  `gerad`.`estado_iva` (
+  `estado_iva_sq` int(11) NOT NULL auto_increment primary key,
+  `estado_sq` int(11) NOT NULL references estado (estado_sq),
+  `ncm_sq` int(11) NOT NULL references ncm (ncm_sq),
+  `aliq_iva` decimal(5,2) default NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `gerad`.`fornecedor`;
+CREATE TABLE  `gerad`.`fornecedor` (
+  `fornecedor_sq` int(11) NOT NULL auto_increment primary key,
+  empresa_sq int(11) not null references empresa (empresa_sq),
+  `cnpj_fornecedor` varchar(15) character set latin1 collate latin1_bin NOT NULL,
+  `nome_fornecedor` varchar(50) NOT NULL,
+  `inscr_municipal` varchar(20) default NULL,
+  `inscr_estadual` varchar(20) default NULL,
+  `e_mail` varchar(100) default NULL,
+  `contato` varchar(50) default NULL,
+  `observacao` text,
+  UNIQUE KEY (empresa_sq, `cnpj_fornecedor`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `gerad`.`fornecedor_endereco`;
+CREATE TABLE  `gerad`.`fornecedor_endereco` (
+  fornecedor_endereco_sq int(11) not null auto_increment primary key,
+  fornecedor_sq int(11) not null references fornecedor (fornecedor_sq),
+  endereco_sq int(11) not null references endereco (endereco_sq)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `gerad`.`fornecedor_telefone`;
+CREATE TABLE  `gerad`.`fornecedor_telefone` (
+  fornecedor_telefone_sq int(11) not null auto_increment primary key,
+  fornecedor_sq int(11) not null references fornecedor (fornecedor_sq),
+  telefone_sq int(11) not null references telefone (telefone_sq)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `gerad`.`historico_alteracao`;
+CREATE TABLE  `gerad`.`historico_alteracao` (
+  `historico_alteracao_sq` int(11) NOT NULL auto_increment primary key,
+  empresa_sq int(11) not null references empresa (empresa_sq),
+  `NOME_TABELA` varchar(50) NOT NULL,
+  `chave_sq` int(11) NOT NULL,
+  `TIPO_ALTERACAO` int(1) NOT NULL,
+  `USUARIO_SQ` int(11) NOT NULL references usuario (usuario_sq),
+  `DATA_ALTERACAO` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+  `observacao` text
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `gerad`.`historico_acesso`;
+CREATE TABLE  `gerad`.`historico_acesso` (
+  `historico_acesso_sq` int(11) NOT NULL auto_increment primary key,
+  empresa_sq int(11) not null references empresa (empresa_sq),
+  `usuario_sq` int(11) NOT NULL references usuario (usuario_sq),
+  `data_acesso` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+  `nome_programa` varchar(250) default NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `gerad`.`historico_login`;
+CREATE TABLE  `gerad`.`historico_login` (
+  `historico_login_sq` int(11) NOT NULL auto_increment primary key,
+  empresa_sq int(11) not null references empresa (empresa_sq),
+  `USUARIO_SQ` int(11) NOT NULL references usuario (usuario_sq),
+  `DATA_LOGIN` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+  `IP_LOGIN` varchar(15) default NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `gerad`.`kardex`;
+CREATE TABLE  `gerad`.`kardex` (
+  `KARDEX_SQ` int(11) NOT NULL auto_increment primary key,
+  empresa_sq int(11) not null references empresa (empresa_sq),
+  `PRODUTO_SQ` int(11) default NULL references produto (produto_sq),
+  `TIPO_MOV` varchar(1) default NULL,
+  `QTDE` int(11) default NULL,
+  `VALOR` decimal(9,2) default NULL,
+  `DATA` timestamp NOT NULL default '0000-00-00 00:00:00',
+  `NFISCAL` int(11) default NULL,
+  `USUARIO_SQ` int(11) NOT NULL references usuario (usuario_sq),
+  `NR_SERIE` text,
+  `pedido_item_sq` int(11) default NULL references pedido_item (pedido_item_sq),
+  `numero_estoque` int(11) default NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `gerad`.`linha`;
+CREATE TABLE  `gerad`.`linha` (
+  `linha_sq` int(11) NOT NULL auto_increment primary key,
+  empresa_sq int(11) not null references empresa (empresa_sq),
+  `descricao_linha` varchar(50) default NULL,
+  `exclusiva` char(1) default 'N',
+  unique key (empresa_sq, descricao_linha)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `gerad`.`modelo`;
+CREATE TABLE  `gerad`.`modelo` (
+  `MODELO_SQ` int(11) NOT NULL auto_increment primary key,
+  empresa_sq int(11) not null references empresa (empresa_sq),
+  `DESCRICAO_MODELO` varchar(200) NOT NULL,
+  UNIQUE KEY (empresa_sq, `descricao_modelo`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `gerad`.`natureza`;
+CREATE TABLE  `gerad`.`natureza` (
+  `NATUREZA_SQ` int(11) NOT NULL auto_increment primary key,
+  empresa_sq int(11) not null references empresa (empresa_sq),
+  `CODIGO_NATUREZA` int(11) NOT NULL,
+  `DESCRICAO_NATUREZA` varchar(50) NOT NULL,
+  `CFO` varchar(4) NOT NULL,
+  `ALIQ_ICMS` decimal(9,2) default NULL,
+  `ALIQ_IPI` decimal(9,2) default NULL,
+  `ENT_SAI` varchar(1) default NULL,
+  `OBSERVACAO` text,
+  `UF01` varchar(2) default NULL,
+  `UF02` varchar(2) default NULL,
+  `UF03` varchar(2) default NULL,
+  `UF04` varchar(2) default NULL,
+  `UF05` varchar(2) default NULL,
+  `UF06` varchar(2) default NULL,
+  `UF07` varchar(2) default NULL,
+  `UF08` varchar(2) default NULL,
+  `UF09` varchar(2) default NULL,
+  `UF10` varchar(2) default NULL,
+  `UF11` varchar(2) default NULL,
+  `UF12` varchar(2) default NULL,
+  `UF13` varchar(2) default NULL,
+  `UF14` varchar(2) default NULL,
+  `UF15` varchar(2) default NULL,
+  `UF16` varchar(2) default NULL,
+  `UF17` varchar(2) default NULL,
+  `UF18` varchar(2) default NULL,
+  `UF19` varchar(2) default NULL,
+  `UF20` varchar(2) default NULL,
+  `UF21` varchar(2) default NULL,
+  `UF22` varchar(2) default NULL,
+  `UF23` varchar(2) default NULL,
+  `UF24` varchar(2) default NULL,
+  `UF25` varchar(2) default NULL,
+  `UF26` varchar(2) default NULL,
+  `UF27` varchar(2) default NULL,
+  `UF28` varchar(2) default NULL,
+  `UF29` varchar(2) default NULL,
+  `UF30` varchar(2) default NULL,
+  `ISENCAO_IPI` varchar(1) default NULL,
+  `ISENCAO_ICMS` varchar(1) default NULL,
+  `DESCRICAO_NATUREZA_NFISCAL` varchar(50) default NULL,
+  `TIPO_NFISCAL` int(11) default NULL,
+  `icms_subst` varchar(1) default 'N',
+  `cfo_subst` varchar(4) default NULL,
+  `numero_estoque_saida` int(11) default '0',
+  `numero_estoque_entrada` int(11) default '0',
+  UNIQUE KEY (empresa_sq, `CODIGO_NATUREZA`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `gerad`.`ncm`;
+CREATE TABLE  `gerad`.`ncm` (
+  `ncm_sq` int(11) NOT NULL auto_increment primary key,
+  empresa_sq int(11) not null references empresa (empresa_sq),
+  `CODIGO_NCM` varchar(10) character set latin1 collate latin1_bin NOT NULL,
+  `ALIQ_ICMS` decimal(4,2) default NULL,
+  `ALIQ_IPI` decimal(4,2) default NULL,
+  `aliq_iva` decimal(5,2) NOT NULL,
+  UNIQUE KEY (empresa_sq,`CODIGO_NCM`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `gerad`.`nota_fiscal_entrada`;
+CREATE TABLE  `gerad`.`nota_fiscal_entrada` (
+  `nota_fiscal_entrada_sq` int(11) NOT NULL auto_increment primary key,
+  empresa_sq int(11) not null references empresa (empresa_sq),
+  `NUMERO_NF_ENT` int(11) NOT NULL,
+  `DTEMISSAO_NF_ENT` timestamp NOT NULL default '0000-00-00 00:00:00',
+  `CLIENTE_SQ` int(11) NOT NULL references cliente (cliente_sq),
+  `NATUREZA_SQ` int(11) default NULL references natureza (natureza_sq),
+  `BASE_ICMS` decimal(9,2) default NULL,
+  `VLR_ICMS` decimal(9,2) default NULL,
+  `BASE_ICMS_SUBST` decimal(9,2) default NULL,
+  `VLR_ICMS_SUBST` decimal(9,2) default NULL,
+  `VLR_PRODUTOS` decimal(9,2) default NULL,
+  `VLR_FRETE` decimal(9,2) default NULL,
+  `VLR_SEGURO` decimal(9,2) default NULL,
+  `VLR_DESP_ACESS` decimal(9,2) default NULL,
+  `VLR_IPI` decimal(9,2) default NULL,
+  `VLR_TOTAL` decimal(9,2) default NULL,
+  `OBSERVACAO` blob,
+  `TRANSFERIDA` varchar(1) default 'N',
+  `DT_ENTRADA` datetime default NULL,
+  UNIQUE KEY USING BTREE (`NUMERO_NF_ENT`,`CLIENTE_SQ`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `gerad`.`nota_fiscal_entrada_item`;
+CREATE TABLE  `gerad`.`nota_fiscal_entrada_item` (
+  `nota_fiscal_entrada_item_sq` int(11) NOT NULL auto_increment primary key,
+  `nota_fiscal_entrada_sq` int(11) NOT NULL references nota_fiscal_entrada (nota_fiscal_entrada_sq),
+  `ITEM` int(11) NOT NULL,
+  `PRODUTO_SQ` int(11) default NULL references produto (produto_sq),
+  `NR_SERIE_ITEM` blob,
+  `QTDE_ITEM` int(11) default NULL,
+  `VLR_UNIT_ITEM` decimal(9,2) default NULL,
+  `VLR_TOTAL_ITEM` decimal(9,2) default NULL,
+  `ALIQ_ICMS_ITEM` decimal(4,2) default NULL,
+  `ALIQ_IPI_ITEM` decimal(4,2) default NULL,
+  `VLR_ICMS_ITEM` decimal(9,2) default NULL,
+  `VLR_IPI_ITEM` decimal(9,2) default NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `gerad`.`nota_fisca_servico`;
+CREATE TABLE  `gerad`.`nota_fisca_servico` (
+  `nota_fisca_servico_sq` int(11) NOT NULL auto_increment primary key,
+  empresa_sq int(11) not null references empresa (empresa_sq),
+  `NUMERO_NF_SERVICO` int(11) NOT NULL,
+  `DATA_NF_SERVICO` timestamp NOT NULL default '0000-00-00 00:00:00',
+  `CLIENTE_SQ` int(11) NOT NULL references cliente (cliente_sq),
+  `TTL_NF_SERVICO` decimal(9,2) NOT NULL,
+  `ALIQ_ISS_NF_SERVICO` decimal(4,2) NOT NULL,
+  `VLR_ISS_NF_SERVICO` decimal(9,2) NOT NULL,
+  UNIQUE KEY (empresa_sq, `NUMERO_NF_SERVICO`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `gerad`.`nfiscal`;
+CREATE TABLE  `gerad`.`nfiscal` (
+  `NFISCAL_SQ` int(11) NOT NULL auto_increment primary key,
+  empresa_sq int(11) not null references empresa (empresa_sq),
+  `NUMERO_NFISCAL` int(11) NOT NULL,
+  `DTEMISSAO_NFISCAL` timestamp NOT NULL default '0000-00-00 00:00:00',
+  `DTSAIDA_NFISCAL` timestamp NULL default NULL,
+  `PEDIDO_SQ` int(11) default NULL references pedido (pedido_sq),
+  `CLIENTE_SQ` int(11) NOT NULL references cliente (cliente_sq),
+  `COND_PAGTO_SQ` int(11) NOT NULL references cond_pagto (cond_pagto_sq),
+  `NATUREZA_SQ` int(11) NOT NULL references natureza (natureza_sq),
+  `TRANSPORTADORA_SQ` int(11) NOT NULL references transportadora (transportadora_sq),
+  `BASE_ICMS` decimal(9,2) default NULL,
+  `VLR_ICMS` decimal(9,2) default NULL,
+  `BASE_ICMS_SUBST` decimal(9,2) default NULL,
+  `VLR_ICMS_SUBST` decimal(9,2) default NULL,
+  `VLR_PRODUTOS` decimal(9,2) default NULL,
+  `VLR_FRETE` decimal(9,2) default NULL,
+  `VLR_SEGURO` decimal(9,2) default NULL,
+  `VLR_DESP_ACESS` decimal(9,2) default NULL,
+  `VLR_IPI` decimal(9,2) default NULL,
+  `VLR_TOTAL` decimal(9,2) default NULL,
+  `FRETE_TRANSP` varchar(1) default NULL,
+  `PLACA_TRANSP` varchar(7) default NULL,
+  `UF_PLACA_TRANSP` varchar(2) default NULL,
+  `QTDE_TRANSP` int(11) default NULL,
+  `ESPECIE_TRANSP` varchar(20) default NULL,
+  `MARCA_TRANSP` varchar(30) default NULL,
+  `NUMERO_TRANSP` varchar(10) default NULL,
+  `PBRUTO_TRANSP` varchar(20) default NULL,
+  `PLIQUIDO_TRANSP` varchar(20) default NULL,
+  `CLASS_FISCAL1` int(11) default NULL,
+  `CLASS_FISCAL2` int(11) default NULL,
+  `CLASS_FISCAL3` int(11) default NULL,
+  `CLASS_FISCAL4` int(11) default NULL,
+  `CLASS_FISCAL5` int(11) default NULL,
+  `CLASS_FISCAL6` int(11) default NULL,
+  `CLASS_FISCAL7` int(11) default NULL,
+  `MENSAGEM` text,
+  `CANCELADA` varchar(1) NOT NULL,
+  `DIAS_DEMONSTRACAO` int(11) default NULL,
+  `COTACAO_DOLAR` decimal(9,4) default NULL,
+  `NR_NFISCAL_RETORNO` int(11) default NULL,
+  `DT_NFISCAL_RETORNO` timestamp NULL default NULL,
+  `CONCLUIDA` varchar(1) default NULL,
+  `VENDEDOR_SQ` int(11) NOT NULL references vendedor (vendedor_sq),
+  `NF_MANUAL` varchar(1) default NULL,
+  `RETORNO_PRODUTO` varchar(1) default 'N',
+  `RETORNO_OBSERVACAO` text,
+  `NATUREZA_RET_DEM` int(11) default NULL references natureza (natureza_sq),
+  `linha_sq` int(11) default NULL references linha (linha_sq),
+  `class_fiscal8` int(11) default NULL,
+  `class_fiscal9` int(11) default NULL,
+  `class_fiscal10` int(11) default NULL,
+  `class_fiscal11` int(11) default NULL,
+  `class_fiscal12` int(11) default NULL,
+  `class_fiscal13` int(11) default NULL,
+  `class_fiscal14` int(11) default NULL,
+  `class_fiscal15` int(11) default NULL,
+  `class_fiscal16` int(11) default NULL,
+  `class_fiscal17` int(11) default NULL,
+  `class_fiscal18` int(11) default NULL,
+  `class_fiscal19` int(11) default NULL,
+  `class_fiscal20` int(11) default NULL,
+  `class_fiscal21` int(11) default NULL,
+  `class_fiscal22` int(11) default NULL,
+  `class_fiscal23` int(11) default NULL,
+  `class_fiscal24` int(11) default NULL,
+  `inf_adicional` varchar(100) default NULL,
+  `nfe_chave` varchar(47) default NULL,
+  `nfe_resposta` blob,
+  `numero_nfe` int(11) default NULL,
+  `nfiscal_sq_referencia` int(11) default NULL,
+  `recibo_nfe` varchar(15) default NULL,
+  `motivo_cancelamento` varchar(45) default NULL,
+  UNIQUE KEY (empresa_sq, `NUMERO_NFISCAL`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `gerad`.`nfiscal_item`;
+CREATE TABLE  `gerad`.`nfiscal_item` (
+  `NFISCAL_ITEM_SQ` int(11) NOT NULL auto_increment primary key,
+  `NFISCAL_SQ` int(11) NOT NULL references nfiscal (nfiscal_sq),
+  `ITEM` int(11) NOT NULL,
+  `PRODUTO_SQ` int(11) default NULL references produto (produto_sq),
+  `NR_SERIE_ITEM` text,
+  `CLASS_FISCAL` varchar(1) default NULL,
+  `STRIBUT` int(11) default NULL,
+  `VLR_UNIT_ITEM` decimal(9,2) default NULL,
+  `VLR_TOTAL_ITEM` decimal(9,2) default NULL,
+  `ALIQ_ICMS_ITEM` decimal(4,2) default NULL,
+  `ALIQ_IPI_ITEM` decimal(4,2) default NULL,
+  `VLR_ICMS_ITEM` decimal(9,2) default NULL,
+  `VLR_IPI_ITEM` decimal(9,2) default NULL,
+  `PESO_BRUTO` decimal(9,2) default NULL,
+  `PESO_LIQUIDO` decimal(9,2) default NULL,
+  `VLR_DESC` decimal(9,2) default NULL,
+  `PCT_DESC` decimal(5,2) default NULL,
+  `VLR_JUROS` decimal(9,2) default NULL,
+  `PCT_JUROS` decimal(5,2) default NULL,
+  `base_icms_subst_item` decimal(9,2) default NULL,
+  `vlr_icms_subst_item` decimal(9,2) default NULL,
+  `origem_mercadoria` int(11) default NULL,
+  `qtde_item` int(11) default NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `gerad`.`notificacao`;
+CREATE TABLE  `gerad`.`notificacao` (
+  `notificacao_sq` int(11) NOT NULL auto_increment primary key,
+  empresa_sq int(11) not null references empresa (empresa_sq),
+  `data_notificacao` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+  `nome_usuario` varchar(50) character set utf8 default NULL,
+  `ip_usuario` varchar(15) character set utf8 default NULL,
+  `versao_software` varchar(10) character set utf8 default NULL,
+  `nome_software` varchar(50) character set utf8 default NULL,
+  `titulo_notificacao` varchar(100) default NULL,
+  `mensagem` text character set utf8,
+  `status` char(1) default NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
+
+DROP TABLE IF EXISTS `gerad`.`pedido`;
+CREATE TABLE  `gerad`.`pedido` (
+  `PEDIDO_SQ` int(11) NOT NULL auto_increment primary key,
+  empresa_sq int(11) not null references empresa (empresa_sq),
+  `CLIENTE_SQ` int(11) NOT NULL references cliente (cliente_sq),
+  `DATA_PEDIDO` timestamp NOT NULL default '0000-00-00 00:00:00',
+  `COND_PAGTO_SQ` int(11) NOT NULL references cond_pagto (cond_pagto_sq),
+  `NATUREZA_SQ` int(11) NOT NULL references natureza (natureza_sq),
+  `COTACAO_DOLAR` decimal(9,4) default NULL,
+  `OBSERVACAO_PED` text,
+  `OBSERVACAO_NF` text,
+  `TRANSPORTADORA_SQ` int(11) NOT NULL references transportadora (transportadora_sq),
+  `VLR_FRETE` decimal(9,2) default NULL,
+  `FRETE_TRANSP` varchar(1) default NULL,
+  `NFISCAL_SQ` int(11) default NULL references nfiscal (nfiscal_sq),
+  `VLR_DESC` decimal(9,2) default NULL,
+  `PCT_DESC` decimal(9,2) default NULL,
+  `VLR_ICMS` decimal(9,2) default NULL,
+  `VLR_IPI` decimal(9,2) default NULL,
+  `VLR_PRODUTOS` decimal(9,2) default NULL,
+  `BASE_ICMS` decimal(9,2) default NULL,
+  `NUMERO_PEDIDO` int(11) default NULL,
+  `DIAS_DEMONSTRACAO` int(11) default NULL,
+  `pct_juros` decimal(4,2) default NULL,
+  `VLR_JUROS` decimal(9,2) default NULL,
+  `VENDEDOR_SQ` int(11) NOT NULL references vendedor (vendedor_sq),
+  `PESO_BRUTO` decimal(9,2) default NULL,
+  `PESO_LIQUIDO` decimal(9,2) default NULL,
+  `VLR_SEGURO` decimal(9,2) default NULL,
+  `linha_sq` int(11) default NULL references linha (linha_sq),
+  `baixou_estoque` char(1) default NULL,
+  `status` char(1) default NULL,
+  UNIQUE KEY (empresa_sq, `NUMERO_PEDIDO`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `gerad`.`pedido_item`;
+CREATE TABLE  `gerad`.`pedido_item` (
+  `PEDIDO_ITEM_SQ` int(11) NOT NULL auto_increment primary key,
+  `PEDIDO_SQ` int(11) NOT NULL references pedido (pedido_sq),
+  `PRODUTO_SQ` int(11) NOT NULL references produto (produto_sq),
+  `QTDE_PEDIDO_ITEM` int(11) NOT NULL,
+  `NR_SERIE_ITEM` text,
+  `PRECO_UNIT` decimal(9,2) default NULL,
+  `VLR_DESC` decimal(9,2) default NULL,
+  `PCT_DESC` decimal(9,2) default NULL,
+  `ALIQ_ICMS_ITEM` decimal(4,2) default NULL,
+  `ALIQ_IPI_ITEM` decimal(4,2) default NULL,
+  `VLR_ICMS_ITEM` decimal(9,2) default NULL,
+  `VLR_IPI_ITEM` decimal(9,2) default NULL,
+  `VLR_TOTAL_ITEM` decimal(9,2) default NULL,
+  `PESO_BRUTO` decimal(9,2) default NULL,
+  `PESO_LIQUIDO` decimal(9,2) default NULL,
+  `VLR_JUROS` decimal(9,2) default NULL,
+  `PCT_JUROS` decimal(5,2) default NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `gerad`.`produto`;
+CREATE TABLE  `gerad`.`produto` (
+  `PRODUTO_SQ` int(11) NOT NULL auto_increment primary key,
+  empresa_sq int(11) not null references empresa (empresa_sq),
+  `CODIGO_PRODUTO` varchar(20) character set latin1 collate latin1_bin NOT NULL,
+  `DESCRICAO_PRODUTO` varchar(50) NOT NULL,
+  `qtde_estoque1` int(11) default NULL,
+  `qtde_estoque2` int(11) default NULL,
+  `ncm_sq` int(11) NOT NULL references ncm (ncm_sq),
+  `UN_PRODUTO` varchar(2) default NULL,
+  `MARCA_PRODUTO` varchar(20) default NULL,
+  `PRECO_UNIT` decimal(9,2) default NULL,
+  `TIPO_PRODUTO` int(11) default NULL,
+  `MODELO_SQ` int(11) NOT NULL references modelo (modelo_sq),
+  `qtde_estoque3` int(11) default NULL,
+  `qtde_estoque4` int(11) default NULL,
+  `qtde_estoque5` int(11) default NULL,
+  `qtde_estoque6` int(11) default NULL,
+  `qtde_estoque7` int(11) default NULL,
+  `qtde_estoque8` int(11) default NULL,
+  `PESO_BRUTO` decimal(8,2) default NULL,
+  `PESO_LIQUIDO` decimal(8,2) default NULL,
+  `linha_sq` int(11) default NULL references linha (linha_sq),
+  `aliq_icms_subst` decimal(9,2) default NULL,
+  `origem_mercadoria` int(11) default NULL,
+  `descricao_completa` blob,
+  `codigo_upc` varchar(12) default NULL,
+  `codigo_dun` varchar(14) default NULL,
+  `largura_liquida` decimal(10,2) default NULL,
+  `altura_liquida` decimal(10,2) default NULL,
+  `profundidade_liquida` decimal(10,2) default NULL,
+  `largura_bruta` decimal(10,2) default NULL,
+  `altura_bruta` decimal(10,2) default NULL,
+  `profundidade_bruta` decimal(10,2) default NULL,
+  `qtde_estoque9` int(11) default NULL,
+  `qtde_estoque10` int(11) default NULL,
+  UNIQUE KEY (empresa_sq, `CODIGO_PRODUTO`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `gerad`.`produto_faltante`;
+CREATE TABLE  `gerad`.`produto_faltante` (
+  `produto_faltante_sq` int(11) NOT NULL auto_increment primary key,
+  empresa_sq int(11) not null references empresa (empresa_sq),
+  `produto_sq` int(11) NOT NULL references produto (produto_sq),
+  `qtde_produto_faltante` int(11) NOT NULL,
+  `data_produto_faltante` timestamp NOT NULL default CURRENT_TIMESTAMP,
+  `nota_fiscal_entrada_sq` int(11) default NULL references nota_fiscal_entrada (nota_fiscal_entrada_sq),
+  `cliente_sq` int(11) default NULL references cliente (cliente_sq)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `gerad`.`rma`;
+CREATE TABLE  `gerad`.`rma` (
+  `rma_sq` int(11) NOT NULL auto_increment primary key,
+  empresa_sq int(11) not null references empresa (empresa_sq),
+  `numero_rma` int(11) NOT NULL,
+  `data_entrada_nf` date NOT NULL,
+  `data_emissao_nf` date default NULL,
+  `numero_nf_cliente` int(11) default NULL,
+  `nome_cliente` varchar(50) NOT NULL,
+  `endereco_cliente` varchar(200) default NULL,
+  `email_cliente` varchar(100) default NULL,
+  `telefone_cliente` varchar(20) default NULL,
+  `responsavel_cliente` varchar(50) default NULL,
+  `nf_compra` int(11) default NULL,
+  `data_compra` date default NULL,
+  `loja_cliente` varchar(100) default NULL,
+  `forma_envio` varchar(20) default NULL,
+  UNIQUE KEY (empresa_sq, `numero_rma`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `gerad`.`rma_item`;
+CREATE TABLE  `gerad`.`rma_item` (
+  `rma_item_sq` int(11) NOT NULL auto_increment primary key,
+  `rma_sq` int(11) NOT NULL references rma (rma_sq),
+  `produto_sq` int(11) NOT NULL references produto (produto_sq),
+  `nr_serie_produto` varchar(100) default NULL,
+  `qtde_produto` int(11) NOT NULL,
+  `acessorio_produto` varchar(100) default NULL,
+  `vlr_unit_produto` decimal(9,2) default NULL,
+  `defeito_produto` varchar(100) default NULL,
+  `data_retorno_produto` timestamp NULL default NULL,
+  `nf_devolucao_produto` int(11) default NULL,
+  `finalizacao_produto` varchar(100) default NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `gerad`.`tipo_cliente`;
+CREATE TABLE  `gerad`.`tipo_cliente` (
+  `tipo_cliente_sq` int(11) NOT NULL auto_increment primary key,
+  empresa_sq int(11) not null references empresa (empresa_sq),
+  `descricao_tipo` varchar(100) NOT NULL,
+  UNIQUE KEY (empresa_sq, `descricao_tipo`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `gerad`.`transportadora`;
+CREATE TABLE  `gerad`.`transportadora` (
+  `TRANSPORTADORA_SQ` int(11) NOT NULL auto_increment primary key,
+  empresa_sq int(11) not null references empresa (empresa_sq),
+  `CODIGO_TRANSPORTADORA` varchar(15) character set latin1 collate latin1_bin NOT NULL,
+  `NOME_TRANSPORTADORA` varchar(50) default NULL,
+  `INSCR_ESTADUAL` varchar(20) default NULL,
+  UNIQUE KEY (empresa_sq, `CODIGO_TRANSPORTADORA`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `gerad`.`transportadora_endereco`;
+CREATE TABLE  `gerad`.`transportadora_endereco` (
+  transportadora_endereco_sq int(11) not null auto_increment primary key,
+  transportadora_sq int(11) not null references transportadora (transportadora_sq),
+  endereco_sq int(11) not null references endereco (endereco_sq)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `gerad`.`transportadora_telefone`;
+CREATE TABLE  `gerad`.`transportadora_telefone` (
+  transportadora_telefone_sq int(11) not null auto_increment primary key,
+  transportadora_sq int(11) not null references transportadora (transportadora_sq),
+  telefone_sq int(11) not null references telefone (telefone_sq)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `gerad`.`usuario`;
+CREATE TABLE  `gerad`.`usuario` (
+  `USUARIO_SQ` int(11) NOT NULL auto_increment primary key,
+  empresa_sq int(11) not null references empresa (empresa_sq),
+  `CODIGO_USUARIO` varchar(20) character set latin1 collate latin1_bin NOT NULL,
+  `NOME_USUARIO` varchar(50) NOT NULL,
+  `SENHA_USUARIO` varchar(50) default NULL,
+  `ERRO_EMAIL_FROM` varchar(50) default NULL,
+  `ERRO_NOME_FROM` varchar(50) default NULL,
+  `ERRO_EMAIL_TO` varchar(50) default NULL,
+  `ERRO_NOME_TO` varchar(50) default NULL,
+  `ERRO_SMTP` varchar(50) default NULL,
+  `ERRO_USERNAME` varchar(50) default NULL,
+  `ERRO_PASSWORD` varchar(50) default NULL,
+  `foto` blob,
+  `VENDEDOR_SQ` int(11) default NULL references vendedor (vendedor_sq),
+  UNIQUE KEY (empresa_sq, `CODIGO_USUARIO`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `gerad`.`vendedor`;
+CREATE TABLE  `gerad`.`vendedor` (
+  `VENDEDOR_SQ` int(11) NOT NULL auto_increment primary key,
+  empresa_sq int(11) not null references empresa (empresa_sq),
+  `CODIGO_VENDEDOR` int(11) NOT NULL,
+  `NOME_VENDEDOR` varchar(100) NOT NULL,
+  `pct_comissao_propria` decimal(4,2) default NULL,
+  `pct_comissao_parceria` decimal(4,2) default NULL,
+  `base_comissao` varchar(1) default NULL,
+  `pct_comissao_desconto` decimal(4,2) default NULL,
+  `obs_comissao_desconto` varchar(100) default NULL,
+  `tipo_vendedor` char(1) default NULL,
+  `data_cadastro` date default NULL,
+  `data_inativacao` date default NULL,
+  UNIQUE KEY (empresa_sq, `CODIGO_VENDEDOR`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;

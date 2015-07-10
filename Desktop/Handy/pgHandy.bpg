@@ -1,0 +1,29 @@
+#------------------------------------------------------------------------------
+VERSION = BWS.01
+#------------------------------------------------------------------------------
+!ifndef ROOT
+ROOT = $(MAKEDIR)\..
+!endif
+#------------------------------------------------------------------------------
+MAKE = $(ROOT)\bin\make.exe -$(MAKEFLAGS) -f$**
+DCC = $(ROOT)\bin\dcc32.exe $**
+BRCC = $(ROOT)\bin\brcc32.exe $**
+#------------------------------------------------------------------------------
+PROJECTS = PrHandy.exe PrServer.exe WebService.exe PrSenhas.exe
+#------------------------------------------------------------------------------
+default: $(PROJECTS)
+#------------------------------------------------------------------------------
+
+PrHandy.exe: Client\PrHandy.dpr
+  $(DCC)
+
+PrServer.exe: Server\PrServer.dpr
+  $(DCC)
+
+WebService.exe: ..\NF-e\WebService.dpr
+  $(DCC)
+
+PrSenhas.exe: Senhas\PrSenhas.dpr
+  $(DCC)
+
+

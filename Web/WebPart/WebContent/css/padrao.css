@@ -1,0 +1,214 @@
+@CHARSET "ISO-8859-1";
+
+body {
+	font-family: Arial;
+}
+
+div.login {
+	position: absolute;
+/*
+	top: expression(document.body.clientHeight * 0.3);
+	left: expression(document.body.offsetWidth * 0.3 + 'px');
+*/
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	width: 250px;
+	height: 150px;
+	margin: auto;
+	background-color: rgb(47, 68, 255);
+	color: white;
+	font-weight: bold;
+}
+
+form.login {
+	padding-left: 10px;
+	padding-top: 10px;
+}
+
+div.cabecalho {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	height: 100px;
+	width: 100%;
+}
+
+div.rodape {
+	position: absolute;
+	left: 0px;
+	bottom: 0px;
+	right: 0px;
+	height: 25px;
+}
+
+div.conteudo {
+	position: absolute;
+	top: 20px;
+	left: 0px;
+	bottom: 25px;
+	right: 0px;
+}
+
+iframe#conteudo {
+	width: 99%;
+	height: 100%;
+	border-style: hidden;
+}
+
+div.busca {
+	position: absolute;
+	top: 5px;
+	right: 0px;
+	left: 10px;
+	visibility: hidden;
+}
+
+div.filtro {
+	position: relative;
+	top: 2px;
+	float: left;
+}
+
+div.filtro label {
+	border: dotted;
+	border-width: thin;
+	padding: 3px;
+}
+
+div.filtros a {
+	position: relative;
+	top: 3px;
+	cursor:pointer;
+}
+
+a.procurar {
+	 position: absolute;
+	 top: 0px;
+}
+
+a.novo {
+	 position: absolute;
+	 top: 0px;
+	 right: 10px;
+}
+
+div.listaRegistros {
+	position: absolute;
+	top: 5px; /*55px;*/
+	bottom: 0px;
+	width: 98%;
+	overflow: auto;
+	border-style: outset;
+}
+
+table.listaRegistros td.link {
+	width: 105px;
+}
+
+table.cadastro {
+	margin-left: auto;
+	margin-right: auto;
+	font-size: small;
+}
+
+table.cadastro tr {
+	height: 35px;
+}
+
+table.cadastro tr.calendarDateInput {
+	height: 20px;
+}
+	
+hr {
+	color: black;
+	background-color: black;
+	height: 6px;
+}
+
+div.corpoCadastro {
+	position: absolute;
+	top: 73px;
+	left: 0px;
+	bottom: 35px;
+	right: 0px;
+	overflow: auto;
+}
+
+ul {
+	display: table;
+	height: 1%;
+	font-size: small;
+	padding: 0px;
+}
+
+ul li {
+	float: left;
+	margin: 0 5px;
+	list-style-type: none;
+	padding: 0px;
+}
+
+ul li a {
+	text-decoration: none;
+	display: block;
+	float: left;
+	padding: 0px 0px 5px 0px;
+	color: transparent;
+}
+
+ul li a div.titulo {
+	color: #CCCCCC;
+	font-weight: bold;
+}
+
+ul li a.selecionado div.titulo, ul li a:hover div.titulo {
+	background-color: transparent;
+	color: #FFFFFF;
+}
+
+a#submit {
+ 	position: fixed;
+ 	top:10;
+ 	right: 60px; 
+ 	color: transparent;
+}
+
+a#cancel {
+ 	position: fixed;
+ 	top:10;
+ 	right: 10px; 
+ 	color: transparent;
+}
+
+div.atalhos {
+	position: absolute;
+	bottom: 10px;
+	padding-left: 20px;
+	width: 90%;
+}
+
+div.atalhos.down {
+	height: 60%;
+	background-color: whitesmoke;
+}
+
+div.atalhos.up {
+	bottom: 10px;
+}
+
+div.atalhos img {
+	cursor: pointer;
+}
+
+div iframe.listaSimples {
+	bottom: 10px;
+	width: 100%;
+	height: 90%;
+	border-style: hidden;
+}
+
+.error {
+	color: red;
+}

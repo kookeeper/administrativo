@@ -1,0 +1,423 @@
+- Registrei uma venda de um cliente que não estava cadastrado. Cadastrou normalmente. Só cadastrar se for um CPF VALIDO e não perguntar se DESEJA CADASTRAR.
+R: Feito
+
+- O cliente foi cadastrado sem o endereço. Fui tentar emitir a nota pra ver se passa no SEFAZ, mas os pedidos registrados não aparecem na tela pra emitr a nota.
+R: Fiz mais testes e não tive problema em importar pedido na nota fiscal (um pedido só pode ir pra uma nota fiscal). Quando voce puder, me chama pra eu entrar no note e fazer uns testes. Sobre o endereço, não posso proibir cadastro de cliente sem endereço, do contrário o vendedor terá que preencher o endereço no momento da venda.
+
+- Preciso corrigir um pedido registrado. Pelo meu conhecimento do sistema, entraria no pedido pelo CADASTRAR NOTAS FISCAIS e faria a alteração. Quando entra no CADASTRAR NOTAS FISCAIS, pode mexer nos preços. Qual sua sugestão pra incluir itens (não pode mexer no que está cadastrado) num pedido registrado? Talvez registrar outra venda e cancelar a anterior... o que vc acha?
+R: Vou alterar a tela de registro de venda para que voce possa alterar um pedido já feito, seja ele o último o não (conforme permissão configurada por usuario)
+
+- Na tela REGISTRAR VENDA, ao invés de clicar para aparecer as imagens, digito o código do produto; aparece somente o código digitado; clico nele para selecioná-lo; o sistema registra a venda e aparece os valores; dai volta pra digitar novo produto; TEM QUE APAGAR A DIGITAÇÃO ANTERIOR. Estou apagando manualmente pra limpar a janela.
+R: Na versão que tenho nao estava limpando a lista suspensa. Limpei ela.
+
+- Quando finalizo a venda, após gravar o sistema se prepara pra novo pedido; precisa limpar as imagens, o código digitado e a lista de produtos.
+R: Feito.
+
+- Ainda nesta situação da volta do último pedido, voltar a tela como se tivesse entrado nela na primeira vez.
+R: Feito.
+
+- Quando corrigir um nome de um MODELO, tem como corrigir o nome do modelo no CADASTRO DE PRODUTO?
+R: O cadastro de produto nao tem o nome do modelo, tem a referencia para o modelo no cadastro de modelo. O nome do modelo fica apenas em um lugar. Se alterar no cadastro de modelo, altera no sistema todo.
+
+- Não aceita nenhum valor de desconto.
+R: Vou criar mais 1 campo no cadastro de vendedor, % de desconto master. Ao registrar uma venda, terá um botão ao lado do desconto. Se clicar neste botão, vai pedir usuario e senha. O usuario e senha que for informado (que estará vinculado ao vendedor master) vai permitir % de desconto até o limite deste campo novo. Mesmo que seja o próprio vendedor master que esteja fazendo a venda ele terá que clicar neste botão, pra indicar que o desconto está sendo liberado.
+
+- Quando emito uma nota fiscal manual e depois emito ela pelo sistema, tenho que mencionar na nota do sistema o nr. da nota fiscal manual. Precisamos colocar uma janela na tela de FINALIZAR VENDA onde possamos digitar o nr. da nota fiscal manual. Quando tiver essa janela preenchida, criar uma linha de mensagem "NOTA FISCAL DO TALIONÁRIO nr. NNNN" na nota do sistema.
+R: Vou colocar o campo no registro de venda e escrever a mensagem já no pedido, no campo reservado para isso.
+
+Precisamos de uma relação de vendas por vendedor e um resumo de vendas por vendedor.
+
+------------------------------------------------------------------------------------------------------
+253.1
+
+- Quando entro no “Cadastrar Notas Fiscais” e clico em “Novo” dá uma mensagem de erro “Foram encontrados mais de 1 registro”.  Clico em OK e sigo em frente. OBS. NÃO ESTÁ PUXANDO O NOME DO CLIENTE
+R: Quando voce inicia uma nota fiscal, eu estava pegando o cliente com nome = CONSUMIDOR. Por isso do erro. Vou mudar. Vou pegar o cliente com CPF = 1. O sistema nomes iguais, mas nao CPF igual. ai vai dar certo.
+
+- Ainda no cadastramento da nota, quando digito o “Número do Pedido” para chamar o pedido registrado, ao digitar o CPF, depois entrar nos ITENS, quando gravo, perde o CPF.
+R: Fiz um teste e não deu nenhum problema. Cadastrei um pedido com CPF = 1, abri o cadastro de nota, importei o pedido, troquei o CPF, alterei um item e gravei.
+
+- Quando entro em “Cadastrar Produtos” dá uma mensagem de erro “Could not convert variant of type (Null) into type (Interger). Clico em OK e sigo em frente. Não tenho acesso ao botão PREÇO SUGERIDO.
+R: Problema corrigido. O PRECO SUGERIDO é o preco unitário / 0.7. Esta informacao nao é gravada na base de dados, por isso nao é possível alterar. Trabalhe com o preco unitário.
+
+- Quando registrar a venda, a partir do 2º. Item, aparecer o valor total dos itens registrados.
+R: Implementado.
+
+- Não pode registrar venda de itens sem preço de tabela.
+R: Vou filtrar a tela pra mostrar apenas itens com preço unitário.
+
+- Quando finalizar a venda, só pode digitar o VALOR do desconto.
+R: E o numero do comprovante do cartao, condicao de pagamento, cpf, e vendedor? Quem irá digitar?
+
+- Subir um pouco a CAIXA REGISTRAR VENDA para poder trabalhar com a tela reduzida.
+R: Implementado.
+
+------------------------------------------------------------------------------------------------------
+250.3
+- Arquivo / Parametros
+•	Na aba financeiro quando coloco a % de PIS 0,65% e salvo, e quando eu fecho o programa e abro novamente a alíquota fica zerada OK
+
+•	Quando vou demonstrar um produto, e seleciono de onde que ele veio, se é armazem ou escritorio, quando for dar entrada novamente nele, ele voltara de onde ele saiu ou para um local padrão? È possivel voltar para o mesmo lugar ou podermos selecionar para onde deve voltar? (o produto voltará para o estoque que saiu)
+
+- Comissão
+Ao mandar calular comissão da o seguinte erro:  OK
+
+Lembrando que antes Ao consultar comissões de um vendedor, mesmo eu colocando no cadastro de vendedor para calcular com o dia do vencimento, ele calcula a comissão com o dia de faturamento, e também a comissão é calculada da seguinte maneira: Valor total da nota (-) ST OK
+
+- Estoque
+•	Ao alimentar o estoque manualmente, preciso que tenha o campo da data da nota, pois do jeito que esta ele pega a data de cadastro no estoque, ou seja, preciso colocar a data manualmente, pois pode ser entrada de estoque antigo. OK
+
+- Relatorios
+•	No relatório, relação de vendas, ao abrir já amostrar as vendas do mesmo mês, pois para isso acontecer tenho que selecionar algum checkbox e depois  deixar sem selecionar novamente. OK
+
+Nas datas dos períodos, na data de termino esta acontecendo o seguinte BUG:
+Se eu seleciono a data de hoje, ele pega as vendas ate um dia anterior e não inclui as do dia que selecionei, para incluir tenho que selecionar a data de um dia posterior, poderia verificar isso. OK
+
+
+No item produto, esta pegando as informações da descrição do produto, gostaria que pegasse o código do produto, pois a descrição muitos são iguais e difícil de localizar. OK
+
+No final do relatório esta mostrando o valor total da compra, então gostaria qie ficasse dois valores: Valor total R$ 000,00   e  Valor total sem ST: R$ 1000,00, um na frente do outro OK
+
+------------------------------------------------------------------------------------------------------
+250.2
+
+ok - Retirar o “Linha”
+nao (natureza errada) - Ao verificar vendas dos vendedores, não esta aparecendo todas as notas, verifiquei na nota que esta faltando e esta como venda e esta registrado o nome do vendedor mas no relatório não aparece
+nao (a pesquisa sera nos dois campos) - Ao consultar por CNPJ, não aparece as vendas de algumas empresas, é possível trocar de CNPJ para Nome da empresa, pois fica mais fácil.
+ok - Ao consultar por produto, ele mostra a quantidade das notas geradas daqueles produtos, porem não mostra a quantidade de scanners vendidos, no total deveria mostrar o numero de scanners vendidos e não a quantidade de notas onde eles estão, e no valor total em R$ mostra a soma de todas as notas juntas, ou seja, se em uma nota tiver o determinado modelo com outro modelo, ele vai somar os dois modelos, onde deveria somar somente o valor do modelo que selecionei para relatório.
+ok - Gostaria que acrescentasse venda por estado, onde pegará o montande de cada estado.
+ok - Quando vou demonstrar um produto, e seleciono de onde que ele veio, se é armazem ou escritorio, quando for dar entrada novamente nele, ele voltara de onde ele saiu ou para um local padrão? È possivel voltar para o mesmo lugar ou podermos selecionar para onde deve voltar?
+ok- Lembrando que toda comissão e paga em cima do valor total da nota – o valor de ST (pois a ST é abatida para calculo de comissão)
+ok- verificar quanto cada revenda vendeu em determinado periodo
+ok- verificar quanto cada vendedor vendeu por determinado periodo
+ok- Verificar relatorio de revendas por ESTADO
+ok- verificar quanto cad determinada revenda vendeu de um determinado produto em certo periodo
+ok- caso seja possivel um grafico de desempenho de revendas e de venda por modelo
+nao (No menu de parametros existe o cadastro de 'tipo de cliente'. O tipo diferenciado é o 'Cliente'. Cadastre o tipo 'Contribuinte' e utilize conforme a necessidade) - Descobri que tem clientes finais contribuintes de ICMS que devem o tratamento da mesma aliquota de ICMS, ou seja, 7% ou 12%. Cliente final mesmo é 18%. Entao, como eles nao sao revenda, pode colocar no tipo de cliente = 'contribuinte' com as aliquotas de revenda?? Assim nao confunde os vendedores, senao dá preço errado pra eles.
+
+------------------------------------------------------------------------------------------------------
+250.1
+
+ok 2 – No pedido quando for selecionar o numero de série, tem como colocar além dos checkbox um campo de busca. Pois terão produtos com mais de 100 items e ficaria complica procurar os números de série
+nao 3 – No cadastro do produto quando eu for editar ele, o checkbox controla por numero de série esta desabilitado, não consigo mexer nele
+-resposta: só pode alterar o checkbox se o produto não tem nenhum numero de serie em estoque. Quando o produto recebe o primeiro numero de serie em estoque, o checkbox nao pode mais ser alterado.
+nao 4 – Depois de emitir nota fiscal de homologação fui verificar o estoque e não fez baixa do estoque.
+-resposta: a baixa do estoque acontece no momento em que o sistema processa o retorno da nfe. o sistema processou este retorno?
+ok 5 – Quando vou emitir nota fiscal de devolução ou retorno de alguma coisa, sou obrigado a colocar o numero de serie, porém nesse caso só habilita os números de serie que temos em estoque, mas como é devolução teria que habilitar os números de serie que saíram como venda ou demonstração, assim colocando esses números no pedido de devolução entraria de volta para o estoque.
+
+ok -No Pedido, o IVA nao calcula o frete. Preciso que ele calcule o frete no IVA.
+
+nao -Preciso que me faça uma pequena modificaçao no layout da impressao de estoque. A coluna Arm é loja e DEM é Armazem. Precisa dar um empurrazinho na coluna ...... Porque o SCANNER AV esta separado varias vezes?? e outras classificaçoes tb.. Nao pode juntar a mesma classificaçao junto??
+-resposta: O SCANNER AV esta separado várias vezes porque ele esta em modelos diferentes. o relatorio agrupa conforme o modelo do produto.
+
+-NFe: aumentar o campo do cod.prod nos daods do produto/serviço.
+ok - Os campos da FATURA ainda aparecem nas Nf de isento de pagamento, eu nao quero que apareça.
+ok - No campo da transportadora, frete nao pode ser DEST/REM, ou é um ou é outro, senao da problema na cobrança do frete.
+ok - No campo dados do produto, preciso de mais espaço no Cod.Prod.
+ok 1. Cadastro de pedido: erro de list index out of bounds se nao selecionar o local do estoque. Para o pedido, nao ha a necessidade. Somente na hora da NF que escolhemos onde.
+2. Cadastro de entrada de NF:
+ok-   a. ao clicar erro de field'numero_estoque'not found. da Ok e abre a tela.
+nao-   b. Na tela do item, a aliquota de ICMS na parte de cima esta correto, mas na parte inferior esta zerado.
+resposta: a aliquota de ICMS do item é calculada da seguinte forma:
+
+	A aliquota de ICMS do item recebe a aliquota do NCM.
+	Se a natureza NAO é do tipo 4 (importacao), verifica:
+		Se o cliente nao tem inscricao estadual OU 
+		Se o tipo do cliente for 'Cliente final' OU 
+		Se a inscricao estadual do cliente for ISENTA, considere:
+			A aliquota de ICMS do item recebe a aliquota de ICMS informada no cadastro da empresa (Aba financeiro, tanto Produtos como Peças).
+		Se nenhuma das 3 condições acima foram satisfeitas, considere:
+			Se o cliente é do estado da empresa (No caso, SP), a aliquota de ICMS do item recebe a aliquota de NCM.
+			Senao, a aliquota de ICMS do item recebe a aliquota da natureza.
+
+	Se a natureza estiver configurada como isento de ICMS, zera a aliquota de ICMS do item.
+
+ok-   c. quando nao escolhe o estoque tambem dá erro de list index out of bound.
+ok-   d. Depois que salva as informaçoes, grava e transfrere, o valor do produto devolvido altera para o valor que esta registrado no prhandy e com o valor do ICMS zerado. Isso acontece quando eu clico no item para verificar. Se saio e nao clico no item e vejo direto na pasta valores, o ICMS esta correto.
+nao-   E. Nao esta adicionando o produto no estoque!!!
+resposta: fiz os testes e todas as notas de entrada entraram no estoque selecionado.
+
+3. Cadastro de produto.
+ok-   a. Ao clicar no produto desejado, da-se o erro: table does not exist [mysql]......... da OK e vejo a tela
+ok-   b. Ao alterar o estoque, erro de list index out of bounds.
+
+nao - Movimentar o estoque apenas uma vez ao emitir ou cancelar a nota fiscal.
+resposta: Nao consegui reproduzir esta situação.
+
+- Cadastrar Clientes / aba contatos realizados
+nao ·         Ao cadastrar um contato realizado a lista de modelo de scanner não esta aparecendo os modelos cadastrados
+resposta: A lista de modelos no cadastro de contato mostra apenas os modelos comprados pelo cliente em questao.
+
+ok ·         Não consigo colocar a quantidade
+ok ·         Colocar algum botão como status de finalizado para quando for gerar pedido não aparecer a mensagem que estava conversando com o cliente anteriormente
+ 
+- Arquivo / Parametros
+nao ·         Na aba financeiro quando coloco a % de PIS 0,65% e salvo, e quando eu fecho o programa e abro novamente a alíquota fica zerada
+resposta: nao consegui reproduzir este erro.s
+ 
+- Cadastro de produtos
+ok ·         na aba estoque/ Caso queira fazer uma retirada manualmente,  eu seleciono o produto coloco numero de serie  e clico em OK, ele da mensagem de erro e não consigo tirar
+ 
+- Cadastrar Notas fiscais
+ok ·         Ao consultar os numero de serie dos scanners vendidos, não aparece nenhum, a coluna de numero de serie esta em branco, como se não cadastrou os que foram vendidos
+ 
+- Numero de série
+ok ·         Não esta sendo impresso os numeros de serie na NFE, nesse caso como esta aparecendo a data de entrada e futuro numero da nota de entrada, gostaria de saber se na impressao da nota so saia o numero de serie sem as informações de (data e nota de entrada de cada numero de serie)
+resposta: na nota fiscal eletronica aparecerá apenas o numero de serie, não aparecerá a data de entrada.
+
+- Consultar / comissões
+nao ·         Ao consultar comissões de um vendedor, mesmo eu colocando no cadastro de vendedor para calcular com o dia do vencimento, ele calcula a comissão com o dia de faturamento
+resposta: nao consegui reproduzir o erro. Verifique se o dia de vencimento da duplicata nao esta igual ao dia de faturamento.
+
+ok ·         Se possivel na consulta de comissão, colocar uma coluna com o nome do cliente e no valor total abaxio de tudo ao inves de colocar o valor vendido, colocar o valor da comissão
+
+
+--------------------------------------------------------------------------------
+250.0
+ok 1 – Ao cadastrar o pedido, não esta puxando o nome do vendedor que esta cadastrado no cliente.
+
+--------------------------------------------------------------------------------
+241.1
+ok- FATURA deve ser OUTROS para os isentos de pagamento. Nao pode ser pagamento a prazo.
+ok- Base de Calculo do ICMS deve ser 0 (zero) para os isentos de pagamento que abrangem: Simples remessa, retorno de armazem, remessa de armazem, demonstraçao e outras saidas. Tanto de SP como para outros Estados.
+ok- Frete esta saindo como EMITENTE mesmo quando a opçao é DESTINATARIO. E porque tem remetente na opçao??
+ok- Permitir cadastrar diretorio no webservice com e sem barra no final
+
+--------------------------------------------------------------------------------
+240.5
+ok-Incluir campos para notas de exportação.
+ok-Preciso que o cadastro de NFS aceite valor com centavos.
+ok-Quando o CFOP for 6109 precisa abrir um campo para preencher o codigo suframa.
+ok-Aparecer apenas a duplicata na NFe (com icms-st)
+ok-Nao aparecer a fatura na NFe
+ok-Notamos que o valor do frete/seguro nao esta aparecendo nem no rodape, nem no item.
+ok- Incluir ICMS-ST no pedido
+ok- Mas hoje eu fui fazer uma NF de retorno de conserto onde IPI e ICMS sao isentos. Eu coloquei frete, mas deu erro que o total do BC ICMS difere do somatorio dos itens. Pra dar continuidade as Nf que eu estava fazendo, coloquei o valor do frete na Info adicionais :( A NF em questao eh 1858.
+ok- Na impressão do pedido esta saindo o logotipo a Handy Age, e gostaria que voce colocasse tambem os campos de ST, pois se eu imprimir um pedido que tenha ST, na impressão vai sair valores incorretos, pois não tem a ST, pois precisamos desse campo para conferencia antes de emissao da nota
+
+--------------------------------------------------------------------------------
+240.4
+ok-1. Despesas acessorias, infelizmente precisa ter, mas elas  ENTRAM  no calculo do ICMS.
+ok-2. Valor do II (imposto de importaçao), precisa de campo pra preenchimento.
+ok-3. No mesmo campo de digitaçao do II, é obrigatorio tb o valor das despesas aduaneiras e valor do IOF, eu peço pra vc deixar automaticamente zero. Entao melhor fazer a soma interna  no programa, ja que nao preciso desses campos.
+ok-4. Declaraçao de importaçao: DI deixar campo para preencher, no caso da fedex ele aceitou S/N
+ok-5.Data reg (deixar campo para preencher) / cod exp - zero zero / UF, local e data colocar campo para preencher.
+ok-6. Adiçoes: Numero 1 / codigo zero / desconto em branco : sao obrigatorios, ridiculo isso.
+
+--------------------------------------------------------------------------------
+240.2
+ok- O manual enviado para o Thomas com as instruções de utilização (handy.rar com o arquivo handy.hlp) não pode ser
+ aberto pelo Windows vista e nem pelo MacOS. Será que dava pra mandar em 1 formato mais universal com o pdf?
+
+--------------------------------------------------------------------------------
+230.9
+ok- No cadastro de pedido, os vendedores costumam achar o cliente, clicando 'cliente' e a janela pop-up nao aparece.
+nao será colocado 1- Se eles esquecerem de colocar a cotaçao do dolar, por favor nao deixar finalizar no OK.
+ok- No cadastro de NF, o tipo de cliente fica em branco, é necessario clicar novamente no cliente para aparecer.
+ok- No imprimir fechamento de notas, excluir as colunas de compra, imp, exp, demo, devol. Incluir a ICMS-ST e tentar
+ aumentar o tamanho da letra, muito pequeno, preciso de lupa!!!  No saldo dos impostos, incluir a ICMS-ST no total
+ delas.
+ok- O calculo do ICMS-ST com frete, deve-se aplicar a menor aliquota de %. Coloquei as porcentagens no estado e deu
+ erro, mas gravou.
+ok- O Estoque ainda esta com problemas, mesmo no cadastro de movimentaçoes estar constando a saida ou entrada, no
+ cadastro de produtos nao acontece o mesmo.
+ok- Ao fazer a consulta de Nf de demonstraçao esta dando erro: foram encontrados mais de 1 registro. E nao abre a tela.
+ok- Criar uma forma de cadastrar as aliquotas de ICMS internas de cada estado e aplicar a forma a seguir 
+para calcular o IVA: ((Valor do produto x aliquota de IVA) + Valor produto) x 18% (aliquota interna de MG)
+((p * i) + p) * c
+p * (i+1) * c
+p *  (c*i + c)
+ok- Ultimamente tivemos muitos problemas toda vez que uma NF é cancelada, ele não faz a soma certa, o sistema não dá a 
+	baixa certa no estoque. Isso dá muito problema na contagem! 
+
+--------------------------------------------------------------------------------
+230.5
+ok - Em relação ao RMA ainda está dando erro. Mas queríamos que o cadastro do RMA fosse mais próximo do que o relatório 
+	que o Marcelo faz atualmente, senão não valeria a pena usar esta função. Segue no anexo os campos/exemplo que 
+	ele precisa para fazer este relatório. Estávamos pensando algo do tipo que ele inseri o número da NF, daí o 
+	PR Handy puxaria algumas informações automaticamente da NF como process date, repair center (pode ser fixo pois 
+	sempre será Avision - Brasil), customer name, phone, model, serial number,quantity, parts number (código), 
+	technician (só tem o Marcelo como técnico por enquanto). O RMA teria que ser em inglês, pois este relatório vai 
+	para o exterior. As demais informações que você havia colocado para inserir no RMA não seria preciso. Não sei se 
+	fui muita clara, qualquer coisa estou a disposição para clarificar ou o Marcelo pode falar com você se tiver 
+	dúvidas.
+ok - O que eu queria pedir para você no “cadastrar nota fiscal” tem as colunas Número NFe e Número, gostaria que você
+ removesse a Coluna Numero que era referente as notas fiscal de papel e no lugar dela você colocar “número do pedido” 
+ ficando na sequência (Número Nfe, Pedido, Data emissão, Cliente, etc...)
+Ao abrir o sistema, a agenda do usuário aparece para que o mesmo saiba quais são suas tarefas pendentes.- Porque ao abrir esta versao, a agenda da macrosolution aparece primeiro?? Depois de fechar a agenda é que aparece a tela principal do Prhandy.
+ok - Na impressao do pedido, gostaria muito que viesse o preço do frete E seguro.
+
+--------------------------------------------------------------------------------
+230.4
+ok- Ao duplicar o pedido, as informações sobre o peso (bruto/liquido) irão para o pedido novo.
+ok- Colocar as consultas e listas por ordem alfabética.
+ok- Ao imprimi a relação de vendas do vendedor, mostrar o número da NF-e.
+ok- Mostrar os pop up dos recados do cadastro do cliente na NF.
+ok- Permitir a alteração de NF.
+ok- Webservice não dar erro de I/O 32 ou File not found.
+ok- Melhorar a velocidade do Prhandy.
+
+--------------------------------------------------------------------------------
+230.3
+ok - Outra erro é que ela disse que no Pedido, quando tenta duplicar outro pedido as informações do PESO não passa 
+	para o pedido novo.
+ok - E ao colocar as coisas por ordem alfabética, por favor colocar em todos os campos em ordem alfabética quando há 
+	alguma lista. Isso facilitaria muito na hora do uso do PR Handy. Por exmplo, última vez não mencionei sobre 
+	colocar em ordem alfabética no cadastro de NF de serviço os Clients. 
+ok - A Mei acabou de me falar que se conseguir quando imprimi a relação de vendas do vendedor na visualização aparece o
+	número da NF-e, mas na hora de imprimir só aparece o número e não NF-e. Ela gostaria que aparecesse NF-e também 
+	para o controle dela. 
+ok - Os pop up dos recados do cadastro do cliente na NF não está aparecendo. 
+Preciso que voce faça as alteraçoes urgentes referente a emissao da NF, pois o resto pode esperar.
+Sinto dizer, mas emitir a NF CORRETAMENTE é prioridade aqui na empresa.
+1. Nao consigo alterar a NF depois que dei ENTER, as vezes ela conserta e as vezes NAO apesar da mensagem de erro que 
+	da.
+   As vezes, eu entro novamente para checar se realmente fez  a alteraçao e ela acaba colocando os valores originais 
+   apos um segundo enter.
+2. Esta dando erro de memoria insuficiente, mesmo quando eu fiz apenas uma nota fiscal ou pedido.
+    Principalmente quando o pedido é grande (importaçao), sou obrigada a entrar no prhandy varias vezes.  
+     E tambem quando eu checo as NF entrando e saindo como faço sempre no final do mes para verificar os valoes do 
+	 rodape.
+3. Webservice esta sempre dando erro de I/O 32 ou File not found.
+Por favor, isso é urgente, nao confio mais no prhandy pra saber se minha Nf esta correta e isso é estressante.
+So fico sabendo se a NF esta correta depois de processar no webservice. 
+
+
+
+Nao sei o que acontece, mas os pop ups nao estao sendo mostrados ao fazer a NF.
+Eu preciso deles pra me lembrar das observaçoes dos clientes.
+O Prhandy esta muito lento, pode verificar isso tambem??
+
+--------------------------------------------------------------------------------
+230.2
+ok -Mudar para Constar por Ordem Alfabética:
+	- Clientes no Cadastro de NF de Serviço
+	- Vendedores na Impressão de Relação de Vendas
+	- Transportadora no Cadastro de Pedidos
+
+ok-Mudar para Constar por Ordem Numérica (decrescente ou seja, o mais recente constando primeiro na lista)
+	- pedidos no Cadastro de Pedidos
+	- NF no Cadastro das Notas Fiscais
+ 
+ok-Cadastrar RMA do usuario TECNICO esta dando erro (creio que já foi avisado antes a você, mas problema ainda 
+não foi solucionado), quando tenta abrir uma filha nova ele dá o erro COULD NOT CONVERT VARIANT OF TYPE (NULL) 
+into type (Integer) (está anexado uma imagem para sua avaliação.) 
+ 
+não consegui reproduzir-No Cadastrar NF quando clica duas vezes para ver os detalhes na barra ITENS nao está listando quais ítens. 
+Antes aparecia, agora não, não sei se foi porque devido a última atualização. 
+
+--------------------------------------------------------------------------------
+230.1
+Correções nas quantidades dos pedidos e das notas fiscais
+
+--------------------------------------------------------------------------------
+230.0
+1) Retirar coluna ESTOQUE HLC pois não se usa mais.
+2) Por exemplo, hoje quando emitimos um estoque de demos para o armazem, só que ao invés o sistema subtraiu do ESTOQUE LOJA, que consequentemente ficou negativo e adicionou ao ESTOQUE ARMAZEM. Tem como alterar isso, ou existe um modo de emitir entrada e saída de demo que não interfera nos outros estoques?
+3) Queríamos re-organizar da seguinte forma as colunas de estoque para nosso controle.
+ 
+- Queríamos saber se há algum jeito de bloqueio que o estoque nunca possa ficar negativo. Desse jeito, não pode emitar nota de saída estando o estoque no zero. 
+
+--------------------------------------------------------------------------------
+222.0
+ok-Marcar os pedidos finalizando que ainda estao pendentes como finalizados.
+
+--------------------------------------------------------------------------------
+221.10
+ok-Correção na abertura das listas.
+
+--------------------------------------------------------------------------------
+2219
+ok-quando vamos emitir uma nota no rodapé onde marcava a condição de pagamento agora esta em branco.
+ok-Quando eu tento cadastrar-Pedido (como se fosse 1 consulta), eu entro com o nome de 1 empresa e na hora de consultar
+	1 pedido finalizado, eu consigo visualizar 1x. Caso eu tente visualizar outro pedido ou o mesmo pedido, é me 
+	apresentado 1 mensagem de que o pedido já foi finalizado, mesmo se o pedido estiver pendente ou finalizado. Agora eu 
+	sai e voltei à lista de empresas... mas só apareceu 2 pedidos finalizados... e todos os outros sumiram (testei com a 
+	empresa E-TAB).
+ok-Ainda preciso que na impressao do pedido tenha as informaçoes do valor do frete E seguro.
+ok-O Marcelo notou q no momento de realizar o pedido, o nome dele não parece mais na lista. Me parece que quando ele 
+	apertava a tecla M, o programa ia pulando entre os nomes existentes, mas agora não acontece mais isso e só aparece 
+	o nome da mei.
+
+--------------------------------------------------------------------------------
+2217
+
+ok-Ao fazer o fechamento das relaçoes de vendas, ao inves do numero da NF, preciso que seja da NF-e.
+ok-Não seria possível pegar a comissão pela data de vencimento da nota fiscal, com a opção de eu deixar selecionado na comissão “valor recebido”
+ok-Verificar a exclusão de itens nos dois RMA.
+ok-Permitir a digitação do motivo do cancelamento da NF-e e enviar à SEFAZ.
+ok-Permitir alterar a nota fiscal de demonstracao sem uma natureza para o retorno.
+ok-Bloquear a alteração das quantidades de estoque dos produtos.
+o espaco disponível não é suficiente-Nota Fiscal: Colocar os números de serie do Pedido no campo adicional da nota e não mais no corpo dela. Ex: AV122 – TW10000000X000X / TW111240000X0000, porem no campo adicional da nota
+
+--------------------------------------------------------------------------------
+2216
+
+ok- A gente trabalha com duas ST (SP E MG), o padrão é deixarmos a alíquota de ST para SP de 27,12, porem quando temos que emitir nota para MG, eu tenho que ir manualmente em NCM e procurar o NCM do scanner e mudar manualmente a aliquota de 27,12 para 38,58 e depois de gerada a nota voltar para 27,12. È possível fazer algum modo que quando selecionar o estado de MG ele automaticamente mude a alíquota ST respectiva de seu estado(SP ou MG).
+ok- A quantidade total de itens na nota fiscal nao esta deixando que eu altere o volume.
+ok- Os dados adicionais nao estao sendo colocados se eu adicionar na observaçao da NF. Apenas atraves do pedido, é que é colocado na NF-e.
+--------------------------------------------------------------------------------
+2215
+
+nao-Trocar o campo “linha” pelo campo “empresa” em todo o sistema;
+nao-Trocar o campo “modelo” pelo campo “linha” em todo o sistema;
+nao-Filtrar os relatórios por “linha” e por “empresa”, conforme a solicitação de cada usuário (via e-mail porterior).
+
+ok-Ao cadastrar um pedido, o campo "Observação" no cadastro de naturezas será copiado para o pedido.
+ok-Ao imprimir a DANFE, as informações digitadas nos campos "Mensagem" e "Informações adicionais" serão impressas no campo "Informações adicionais" do formulário. O máximo permitido pela SEFAZ para estas linhas é de 60 caracteres. Não é permitido um campo maior.
+ok-A primeira coluna da lista de pedidos mostrará o status do pedido (Finalizado, Cancelado ou Pendente).
+ok-Ao incluir itens na nota fiscal, o sistema somará a quantidade de itens e informará no campo correspondente da transportadora.
+ok-Após a emissão da nota fiscal eletrônica é possível alterar o número de série dos itens da nota, através do botão "" na lista de notas fiscais.
+ok-Para controlar as notas fiscais de demonstração, vá até o menu "Consultar" e clique no item "Notas fiscais de Demonstração". Neste item é possível acompanhar o vencimento e retorno das notas fiscais de demonstração ao estoque.
+--------------------------------------------------------------------------------
+2213
+
+ok- Data too long for column 'PLACA_TRANSP' at row 1 INSERT INTO nfiscais 
+ok- Este Registro Não Pode ser Apagado!Verifique os vinculos deste registro com outras tabelas!.
+ok- TAG:<dest><enderDest> ID:E07/nro(Número) - Nenhum valor informado.'' viola a restrição minLength de '1'.
+ok- TAG:<dest><enderDest> ID:E16/fone(Telefone) - Tamanho maior que o máximo permitido [541152359844].'541152359844' violates pattern constraint of '[0-9]{1,10}'.
+ok- TAG:<dest><enderDest> ID:E09/xBairro(Bairro) - Nenhum valor informado.'' viola a restrição minLength de '1'.
+ok- TAG:<dest> ID:E02-E03/CNPJ-CPF(CNPJ/CPF) - Nenhum valor informado.
+ok- TAG:<det nItem="1"><prod> ID:I05/NCM(Código NCM) - Tamanho menor que o mínimo permitido [COSMO].'COSMO' viola a restrição pattern de '[0-9]{8}'.
+ok- Falha da análise do elemento '{http://www.portalfiscal.inf.br/nfe}placa' com valor 'SB-2011'.
+ok- Criar uma forma de filtrar linhas diferentes numa mesma nota fiscal.
+ok- Criar uma forma de filtrar consultas com mais de uma linha.
+--------------------------------------------------------------------------------
+2212
+
+ok-Correção nas casas decimais da cotação do dolar no pedido e na nota fiscal.
+-------------------------------------------------------------------------------
+2211
+
+ok-No contas a pagar: Criar um cadastro de fornecedores, separado do cadastro de clientes;
+ok-No contas a pagar: Mostrar o valor calculado (valor a pagar + juros – desconto);
+ok-No contas a pagar: Criar um cadastro de bancos e contas, para seleção na baixa do boleto;
+
+ok-No contas a receber: Ao criar um novo registro de pagamento do boleto, preencher com a data atual e o valor a receber;
+ok-Informar um valor para a cotação do dolar nos pedidos e nas notas fiscais.
+-------------------------------------------------------------
+2210
+
+ok-1. O numero do pedido, na impressao, NAO está em ordem e isso confunde.
+ok-2. No cadastro de pedido, ao ver o item, gostaria de visualizar cod/descriçao/qty/preço (no momento está serie)
+ok-3. No cadastro de NF, na janela item , gostaria de visualizar o item/doc/descriçao/qtyloja/qtyarmazem/qty demo/preço (está NCM)
+ok-5. NAO CONSIGO COLOCAR A COTAÇAO DO DOLAR NA CASA DOS CENTAVOS !!!!
+
+ok-No cadastro de produtos, Mostrar a alíquota de IPI do NCM;
+ok-No cadastro de produtos, Mostrar o valor do produto sem considerar o valor do IPI (com base no campo "Preco Unitário");
+
+ok-No contas a pagar: Permitir apenas a baixa total do boleto;
+ok-No contas a pagar: Incluir um campo para juros, desconto;
+ok-No contas a pagar: Permitir que o número do boleto tenha letras;
+--------------------------------------------------------------------------------------------------------------------
+2208
+
+No cadastro de nota fiscal:
+ok-Mostrar em amarelo os itens que podem ser atendidos parcialmente pelo estoque e em vermelho os que não possuem estoque;
+ok-Ao importar um pedido, não mostrar itens com quantidade já atendida;
+ 
+ok-Permitir que os pedidos sejam cancelados e finalizados;
+ok-No histórico do cliente, mostrar o número da nota fiscal eletrônica e o código do produto;
+
+Na relação de vendas:
+ok-Mostrar o número da nota fiscal eletrônica;
+ok-Filtrar por produto;

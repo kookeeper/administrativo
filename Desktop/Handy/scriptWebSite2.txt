@@ -1,0 +1,1179 @@
+CREATE DATABASE `gerad` /*!40100 DEFAULT CHARACTER SET latin1 */;
+
+drop table if exists gerad.empresa;
+create table  gerad.empresa (
+  empresa_sq int(11) not null auto_increment,
+  codigo_empresa varchar(15) not null,
+  nome_empresa varchar(50) not null,
+  acessos int(11) default null,
+  senha varchar(14) default null,
+  numero_nfiscal int(11) default null,
+  estado varchar(2) default null,
+  numero_pedido int(11) default null,
+  alt_data_pedido varchar(1) default null,
+  alt_dtemissao_nfiscal varchar(1) default null,
+  aliq_icms_prod1 decimal(9,2) default null,
+  aliq_icms_pec1 decimal(9,2) default null,
+  stribut int(11) default null,
+  alt_nr_pedido varchar(1) default null,
+  alt_nr_nfiscal varchar(1) default null,
+  dias_demonstracao int(11) default null,
+  numero_assistencia int(11) default null,
+  aliq_pis decimal(9,2) default null,
+  aliq_cofins decimal(9,2) default null,
+  ultima_classificacao timestamp not null default '0000-00-00 00:00:00',
+  aamm_classificacao int(6) default null,
+  aliq_iss decimal(9,2) default null,
+  margem_esq_nf decimal(4,2) default null,
+  margem_sup_nf decimal(4,2) default null,
+  banco_imagens varchar(50) default null,
+  baixa_estoque_pedido char(1) default 'n',
+  juros_receber decimal(5,2) default null,
+  numero_rma int(11) default '0',
+  estoque_negativo varchar(1) default 's',
+  descricao_estoque1 varchar(100) default 'loja',
+  descricao_estoque2 varchar(100) default 'armazem',
+  descricao_estoque3 varchar(100) default 'demonstrao',
+  descricao_estoque4 varchar(100) default 'defeito',
+  descricao_estoque5 varchar(100) default 'em uso',
+  descricao_estoque6 varchar(100) default 'backup',
+  descricao_estoque7 varchar(100) default 'demonstrao em cliente',
+  descricao_estoque8 varchar(100) default 'hlc',
+  descricao_estoque9 varchar(100) default null,
+  descricao_estoque10 varchar(100) default null,
+  primary key  (empresa_sq)
+) engine=innodb default charset=latin1;
+
+drop table if exists gerad.classificacao;
+create table  gerad.classificacao (
+  classificacao_sq int(11) not null auto_increment,
+  empresa_sq int(11) not null,
+  codigo_classificacao varchar(50) character set latin1 collate latin1_bin not null,
+  limite_minimo decimal(9,2) not null,
+  limite_maximo decimal(9,2) default null,
+  meses_bonus int(2) default null,
+  primary key (classificacao_sq),
+  unique key (empresa_sq,codigo_classificacao),
+  key (empresa_sq),
+  constraint foreign key (empresa_sq) references empresa (empresa_sq) on delete no action on update cascade
+) engine=innodb default charset=latin1;
+
+drop table if exists gerad.tipo_endereco;
+create table  gerad.tipo_endereco (
+  tipo_endereco_sq int(11) not null auto_increment primary key,
+  empresa_sq int(11) not null,
+  tipo_endereco varchar(100) not null,
+  unique key (empresa_sq, tipo_endereco),
+  key (empresa_sq),
+  constraint foreign key (empresa_sq) references empresa (empresa_sq) on delete no action on update cascade
+) engine=innodb default charset=latin1;
+
+drop table if exists gerad.tipo_telefone;
+create table  gerad.tipo_telefone (
+  tipo_telefone_sq int(11) not null auto_increment primary key,
+  empresa_sq int(11) not null,
+  tipo_telefone varchar(100) not null,
+  unique key (empresa_sq, tipo_telefone),
+  key (empresa_sq),
+  constraint foreign key (empresa_sq) references empresa (empresa_sq) on delete no action on update cascade
+) engine=innodb default charset=latin1;
+
+drop table if exists gerad.endereco;
+create table  gerad.endereco (
+  endereco_sq int(11) not null auto_increment primary key,
+  empresa_sq int(11) not null,
+  tipo_endereco_sq int(11) not null,
+  endereco varchar(50) default null,
+  numero varchar(20) default null,
+  bairro varchar(30) default null,
+  compl_endereco varchar(50) default null,
+  cidade varchar(30) default null,
+  estado varchar(2) default null,
+  cep varchar(8) default null,
+  pais varchar(20) default null,
+  key (empresa_sq),
+  constraint foreign key (empresa_sq) references empresa (empresa_sq) on delete no action on update cascade,
+  constraint foreign key (tipo_endereco_sq) references tipo_endereco (tipo_endereco_sq)
+) engine=innodb default charset=latin1;
+
+drop table if exists gerad.telefone;
+create table  gerad.telefone (
+  telefone_sq int(11) not null auto_increment primary key,
+  empresa_sq int(11) not null,
+  tipo_telefone_sq int(11) not null,
+  ddd_fone1 varchar(4) default null,
+  numero_fone1 varchar(15) default null,
+  compl_fone1 varchar(10) default null,
+  key (empresa_sq),
+  constraint foreign key (empresa_sq) references empresa (empresa_sq) on delete no action on update cascade,
+  constraint foreign key (tipo_telefone_sq) references tipo_telefone (tipo_telefone_sq)
+) engine=innodb default charset=latin1;
+
+drop table if exists gerad.cond_pagto;
+create table  gerad.cond_pagto (
+  cond_pagto_sq int(11) not null auto_increment,
+  empresa_sq int(11) not null,
+  codigo_cond_pagto int(11) not null,
+  descricao_cond_pagto varchar(50) not null,
+  parcelas int(11) not null,
+  d00 int(11) default null,
+  d01 int(11) default null,
+  d02 int(11) default null,
+  d03 int(11) default null,
+  d04 int(11) default null,
+  d05 int(11) default null,
+  d06 int(11) default null,
+  d07 int(11) default null,
+  d08 int(11) default null,
+  d09 int(11) default null,
+  p00 int(3) default null,
+  p01 int(3) default null,
+  p02 int(3) default null,
+  p03 int(3) default null,
+  p04 int(3) default null,
+  p05 int(3) default null,
+  p06 int(3) default null,
+  p07 int(3) default null,
+  p08 int(3) default null,
+  p09 int(3) default null,
+  primary key (cond_pagto_sq),
+  unique key (empresa_sq,codigo_cond_pagto),
+  key (empresa_sq),
+  constraint foreign key (empresa_sq) references empresa (empresa_sq) on delete no action on update cascade
+) engine=innodb default charset=latin1;
+
+drop table if exists gerad.conta_banco;
+create table  gerad.conta_banco (
+  conta_banco_sq int(11) not null auto_increment,
+  empresa_sq int(11) not null,
+  nome_banco varchar(50) not null,
+  nome_agencia varchar(50) default null,
+  numero_conta varchar(50) not null,
+  primary key (conta_banco_sq),
+  key (empresa_sq),
+  constraint foreign key (empresa_sq) references empresa (empresa_sq) on delete no action on update cascade
+) engine=innodb default charset=latin1;
+
+drop table if exists gerad.estado;
+create table  gerad.estado (
+  estado_sq int(11) not null auto_increment,
+  empresa_sq int(11) not null,
+  codigo_estado varchar(2) not null,
+  aliq_icms_intra decimal(5,2) not null,
+  descricao_estado varchar(50) not null,
+  codigo_ibge int(11) not null,
+  primary key (estado_sq),
+  key (empresa_sq),
+  constraint foreign key (empresa_sq) references empresa (empresa_sq) on delete no action on update cascade
+) engine=innodb default charset=latin1;
+
+drop table if exists gerad.fornecedor;
+create table  gerad.fornecedor (
+  fornecedor_sq int(11) not null auto_increment,
+  empresa_sq int(11) not null,
+  cnpj_fornecedor varchar(15) character set latin1 collate latin1_bin not null,
+  nome_fornecedor varchar(50) not null,
+  inscr_municipal varchar(20) default null,
+  inscr_estadual varchar(20) default null,
+  e_mail varchar(100) default null,
+  contato varchar(50) default null,
+  observacao text,
+  primary key (fornecedor_sq),
+  unique key (empresa_sq,cnpj_fornecedor),
+  key (empresa_sq),
+  constraint foreign key (empresa_sq) references empresa (empresa_sq) on delete no action on update cascade
+) engine=innodb default charset=latin1;
+
+drop table if exists gerad.fornecedor_endereco;
+create table  gerad.fornecedor_endereco (
+  fornecedor_endereco_sq int(11) not null auto_increment primary key,
+  fornecedor_sq int(11) not null,
+  endereco_sq int(11) not null,
+  constraint foreign key (fornecedor_sq) references fornecedor (fornecedor_sq),
+  constraint foreign key (endereco_sq) references endereco (endereco_sq)
+) engine=innodb default charset=latin1;
+
+drop table if exists gerad.fornecedor_telefone;
+create table  gerad.fornecedor_telefone (
+  fornecedor_telefone_sq int(11) not null auto_increment primary key,
+  fornecedor_sq int(11) not null,
+  telefone_sq int(11) not null,
+  constraint foreign key (fornecedor_sq) references fornecedor (fornecedor_sq),
+  constraint foreign key (telefone_sq) references telefone (telefone_sq)
+) engine=innodb default charset=latin1;
+
+drop table if exists gerad.historico_acesso;
+create table  gerad.historico_acesso (
+  historico_acesso_sq int(11) not null auto_increment,
+  empresa_sq int(11) not null,
+  usuario_sq int(11) not null,
+  data_acesso timestamp not null default current_timestamp on update current_timestamp,
+  nome_programa varchar(250) default null,
+  primary key (historico_acesso_sq),
+  key (empresa_sq),
+  constraint foreign key (empresa_sq) references empresa (empresa_sq) on delete no action on update cascade
+) engine=innodb default charset=latin1;
+
+drop table if exists gerad.linha;
+create table  gerad.linha (
+  linha_sq int(11) not null auto_increment,
+  empresa_sq int(11) not null,
+  descricao_linha varchar(50) default null,
+  exclusiva char(1) default 'n',
+  primary key (linha_sq),
+  unique key (empresa_sq,descricao_linha),
+  key (empresa_sq),
+  constraint foreign key (empresa_sq) references empresa (empresa_sq) on delete no action on update cascade
+) engine=innodb default charset=latin1;
+
+drop table if exists gerad.modelo;
+create table  gerad.modelo (
+  modelo_sq int(11) not null auto_increment,
+  empresa_sq int(11) not null,
+  descricao_modelo varchar(200) not null,
+  primary key (modelo_sq),
+  unique key (empresa_sq,descricao_modelo),
+  key (empresa_sq),
+  constraint foreign key (empresa_sq) references empresa (empresa_sq) on delete no action on update cascade
+) engine=innodb default charset=latin1;
+
+drop table if exists gerad.natureza;
+create table  gerad.natureza (
+  natureza_sq int(11) not null auto_increment,
+  empresa_sq int(11) not null,
+  codigo_natureza int(11) not null,
+  descricao_natureza varchar(50) not null,
+  cfo varchar(4) not null,
+  aliq_icms decimal(9,2) default null,
+  aliq_ipi decimal(9,2) default null,
+  ent_sai varchar(1) default null,
+  observacao text,
+  uf01 varchar(2) default null,
+  uf02 varchar(2) default null,
+  uf03 varchar(2) default null,
+  uf04 varchar(2) default null,
+  uf05 varchar(2) default null,
+  uf06 varchar(2) default null,
+  uf07 varchar(2) default null,
+  uf08 varchar(2) default null,
+  uf09 varchar(2) default null,
+  uf10 varchar(2) default null,
+  uf11 varchar(2) default null,
+  uf12 varchar(2) default null,
+  uf13 varchar(2) default null,
+  uf14 varchar(2) default null,
+  uf15 varchar(2) default null,
+  uf16 varchar(2) default null,
+  uf17 varchar(2) default null,
+  uf18 varchar(2) default null,
+  uf19 varchar(2) default null,
+  uf20 varchar(2) default null,
+  uf21 varchar(2) default null,
+  uf22 varchar(2) default null,
+  uf23 varchar(2) default null,
+  uf24 varchar(2) default null,
+  uf25 varchar(2) default null,
+  uf26 varchar(2) default null,
+  uf27 varchar(2) default null,
+  uf28 varchar(2) default null,
+  uf29 varchar(2) default null,
+  uf30 varchar(2) default null,
+  isencao_ipi varchar(1) default null,
+  isencao_icms varchar(1) default null,
+  descricao_natureza_nfiscal varchar(50) default null,
+  tipo_nfiscal int(11) default null,
+  icms_subst varchar(1) default 'n',
+  cfo_subst varchar(4) default null,
+  numero_estoque_saida int(11) default '0',
+  numero_estoque_entrada int(11) default '0',
+  primary key (natureza_sq),
+  unique key (empresa_sq,codigo_natureza),
+  key (empresa_sq),
+  constraint foreign key (empresa_sq) references empresa (empresa_sq) on delete no action on update cascade
+) engine=innodb default charset=latin1;
+
+drop table if exists gerad.ncm;
+create table  gerad.ncm (
+  ncm_sq int(11) not null auto_increment,
+  empresa_sq int(11) not null,
+  codigo_ncm varchar(10) character set latin1 collate latin1_bin not null,
+  aliq_icms decimal(4,2) default null,
+  aliq_ipi decimal(4,2) default null,
+  aliq_iva decimal(5,2) not null,
+  primary key (ncm_sq),
+  unique key (empresa_sq,codigo_ncm),
+  key (empresa_sq),
+  constraint foreign key (empresa_sq) references empresa (empresa_sq) on delete no action on update cascade
+) engine=innodb default charset=latin1;
+
+drop table if exists gerad.notificacao;
+create table  gerad.notificacao (
+  notificacao_sq int(11) not null auto_increment,
+  empresa_sq int(11) not null,
+  data_notificacao timestamp not null default current_timestamp on update current_timestamp,
+  nome_usuario varchar(50) character set utf8 default null,
+  ip_usuario varchar(15) character set utf8 default null,
+  versao_software varchar(10) character set utf8 default null,
+  nome_software varchar(50) character set utf8 default null,
+  titulo_notificacao varchar(100) default null,
+  mensagem text character set utf8,
+  status char(1) default null,
+  primary key (notificacao_sq),
+  unique key (empresa_sq,data_notificacao),
+  key (empresa_sq),
+  constraint foreign key (empresa_sq) references empresa (empresa_sq) on delete no action on update cascade
+) engine=innodb default charset=latin1 row_format=dynamic;
+
+drop table if exists gerad.tipo_cliente;
+create table  gerad.tipo_cliente (
+  tipo_cliente_sq int(11) not null auto_increment,
+  empresa_sq int(11) not null,
+  descricao_tipo varchar(100) not null,
+  primary key (tipo_cliente_sq),
+  unique key (empresa_sq,descricao_tipo),
+  key (empresa_sq),
+  constraint foreign key (empresa_sq) references empresa (empresa_sq) on delete no action on update cascade
+) engine=innodb default charset=latin1;
+
+drop table if exists gerad.transportadora;
+create table  gerad.transportadora (
+  transportadora_sq int(11) not null auto_increment,
+  empresa_sq int(11) not null,
+  codigo_transportadora varchar(15) character set latin1 collate latin1_bin not null,
+  nome_transportadora varchar(50) default null,
+  inscr_estadual varchar(20) default null,
+  primary key (transportadora_sq),
+  unique key (empresa_sq,codigo_transportadora),
+  key (empresa_sq),
+  constraint foreign key (empresa_sq) references empresa (empresa_sq) on delete no action on update cascade
+) engine=innodb default charset=latin1;
+
+drop table if exists `gerad`.`transportadora_endereco`;
+create table  `gerad`.`transportadora_endereco` (
+  transportadora_endereco_sq int(11) not null auto_increment primary key,
+  transportadora_sq int(11) not null,
+  endereco_sq int(11) not null,
+  constraint foreign key (transportadora_sq) references transportadora (transportadora_sq),
+  constraint foreign key (endereco_sq) references endereco (endereco_sq)
+) engine=innodb default charset=latin1;
+
+drop table if exists `gerad`.`transportadora_telefone`;
+create table  `gerad`.`transportadora_telefone` (
+  transportadora_telefone_sq int(11) not null auto_increment primary key,
+  transportadora_sq int(11) not null,
+  telefone_sq int(11) not null,
+  constraint foreign key (transportadora_sq) references transportadora (transportadora_sq),
+  constraint foreign key (telefone_sq) references telefone (telefone_sq)
+) engine=innodb default charset=latin1;
+
+drop table if exists gerad.vendedor;
+create table  gerad.vendedor (
+  vendedor_sq int(11) not null auto_increment,
+  empresa_sq int(11) not null,
+  codigo_vendedor int(11) not null,
+  nome_vendedor varchar(100) not null,
+  pct_comissao_propria decimal(4,2) default null,
+  pct_comissao_parceria decimal(4,2) default null,
+  base_comissao varchar(1) default null,
+  pct_comissao_desconto decimal(4,2) default null,
+  obs_comissao_desconto varchar(100) default null,
+  tipo_vendedor char(1) default null,
+  data_cadastro date default null,
+  data_inativacao date default null,
+  primary key (vendedor_sq),
+  unique key (empresa_sq,codigo_vendedor),
+  key (empresa_sq),
+  constraint foreign key (empresa_sq) references empresa (empresa_sq) on delete no action on update cascade
+) engine=innodb default charset=latin1;
+
+drop table if exists gerad.cliente;
+create table  gerad.cliente (
+  cliente_sq int(11) not null auto_increment,
+  empresa_sq int(11) not null,
+  codigo_cliente varchar(15) character set latin1 collate latin1_bin not null,
+  nome_cliente varchar(50) not null,
+  inscr_estadual varchar(20) default null,
+  e_mail varchar(100) default null,
+  web_site varchar(100) default null,
+  contato varchar(50) default null,
+  observacao text,
+  revenda varchar(1) default null,
+  biro varchar(1) default null,
+  capital_atual decimal(9,2) default null,
+  nome_fantasia varchar(50) default null,
+  ramo_atividade_sq int(11) default null,
+  faturamento_mensal decimal(9,2) default null,
+  data_fundacao timestamp null default null,
+  inscr_municipal varchar(20) default null,
+  data_cadastro timestamp null default null,
+  data_alt timestamp null default null,
+  usuario_sq_alt int(11) default null,
+  transportadora_sq int(11) default null,
+  classificacao_sq int(11) default null,
+  tipo_cliente_sq int(11) default null,
+  vendedor_sq int(11) default null,
+  primary key (cliente_sq),
+  unique key (empresa_sq,codigo_cliente),
+  key (transportadora_sq),
+  key (classificacao_sq),
+  key (tipo_cliente_sq),
+  key (vendedor_sq),
+  key (empresa_sq),
+  constraint foreign key (empresa_sq) references empresa (empresa_sq) on delete no action on update cascade,
+  constraint foreign key (classificacao_sq) references classificacao (classificacao_sq) on delete no action on update cascade,
+  constraint foreign key (tipo_cliente_sq) references tipo_cliente (tipo_cliente_sq) on delete set null on update cascade,
+  constraint foreign key (transportadora_sq) references transportadora (transportadora_sq) on delete no action on update cascade,
+  constraint foreign key (vendedor_sq) references vendedor (vendedor_sq) on delete set null on update cascade
+) engine=innodb default charset=latin1;
+
+drop table if exists gerad.cliente_endereco;
+create table  gerad.cliente_endereco (
+  cliente_endereco_sq int(11) not null auto_increment primary key,
+  cliente_sq int(11) not null,
+  endereco_sq int(11) not null,
+  constraint foreign key (cliente_sq) references cliente (cliente_sq),
+  constraint foreign key (endereco_sq) references endereco (endereco_sq)
+) engine=innodb default charset=latin1;
+
+drop table if exists gerad.cliente_telefone;
+create table  gerad.cliente_telefone (
+  cliente_telefone_sq int(11) not null auto_increment primary key,
+  cliente_sq int(11) not null,
+  telefone_sq int(11) not null,
+  constraint foreign key (cliente_sq) references cliente (cliente_sq),
+  constraint foreign key (telefone_sq) references telefone (telefone_sq)
+) engine=innodb default charset=latin1;
+
+drop table if exists gerad.conta_pagar;
+create table  gerad.conta_pagar (
+  conta_pagar_sq int(11) not null auto_increment,
+  empresa_sq int(11) not null,
+  fornecedor_sq int(11) not null,
+  numero_duplicata varchar(20) not null,
+  valor_duplicata decimal(9,2) default null,
+  dtcadastro_duplicata datetime not null,
+  dtvencimento_duplicata datetime not null,
+  observacao blob,
+  conta_pagar_auto_sq int(11) default null,
+  referencia_auto int(4) default null,
+  dt_pgto datetime default null,
+  valor_pgto decimal(9,2) default null,
+  valor_desconto decimal(9,2) default null,
+  valor_juros decimal(9,2) default null,
+  forma_pgto varchar(20) default null,
+  conta_banco_sq int(11) default null,
+  primary key (conta_pagar_sq),
+  unique key (empresa_sq,fornecedor_sq,numero_duplicata),
+  key (conta_banco_sq),
+  key (fornecedor_sq),
+  key (empresa_sq),
+  constraint foreign key (empresa_sq) references empresa (empresa_sq) on delete no action on update cascade,
+  constraint foreign key (conta_banco_sq) references conta_banco (conta_banco_sq) on delete set null on update cascade,
+  constraint foreign key (fornecedor_sq) references fornecedor (fornecedor_sq) on delete no action on update cascade
+) engine=innodb default charset=latin1;
+
+drop table if exists gerad.conta_pagar_auto;
+create table  gerad.conta_pagar_auto (
+  conta_pagar_auto_sq int(11) not null auto_increment,
+  empresa_sq int(11) not null,
+  fornecedor_sq int(11) not null,
+  valor decimal(9,2) not null,
+  data_inicial datetime not null,
+  parcelas int(11) not null,
+  observacao blob,
+  primary key (conta_pagar_auto_sq),
+  key (fornecedor_sq),
+  key (empresa_sq),
+  constraint foreign key (empresa_sq) references empresa (empresa_sq) on delete no action on update cascade,
+  constraint foreign key (fornecedor_sq) references cliente (cliente_sq) on delete no action on update cascade
+) engine=innodb default charset=latin1;
+
+drop table if exists gerad.conta_pagar_pgto;
+create table  gerad.conta_pagar_pgto (
+  conta_pagar_pgto_sq int(11) not null auto_increment,
+  conta_pagar_sq int(11) not null,
+  dt_pgto datetime not null,
+  valor_pgto decimal(9,2) not null,
+  forma_pgto varchar(20) default null,
+  observacao varchar(100) default null,
+  banco varchar(10) default null,
+  conta varchar(20) default null,
+  primary key (conta_pagar_pgto_sq),
+  key (conta_pagar_sq),
+  constraint foreign key (conta_pagar_sq) references conta_pagar (conta_pagar_sq) on delete cascade on update cascade
+) engine=innodb default charset=latin1;
+
+drop table if exists gerad.estado_iva;
+create table  gerad.estado_iva (
+  estado_iva_sq int(11) not null auto_increment,
+  estado_sq int(11) not null,
+  ncm_sq int(11) not null,
+  aliq_iva decimal(5,2) default null,
+  primary key (estado_iva_sq),
+  key (estado_sq),
+  key (ncm_sq),
+  constraint foreign key (estado_sq) references estado (estado_sq) on delete cascade on update cascade,
+  constraint foreign key (ncm_sq) references ncm (ncm_sq) on delete cascade on update cascade
+) engine=innodb default charset=latin1;
+
+drop table if exists gerad.produto;
+create table  gerad.produto (
+  produto_sq int(11) not null auto_increment,
+  empresa_sq int(11) not null,
+  codigo_produto varchar(20) character set latin1 collate latin1_bin not null,
+  descricao_produto varchar(50) not null,
+  qtde_estoque1 int(11) default null,
+  qtde_estoque2 int(11) default null,
+  ncm_sq int(11) not null,
+  un_produto varchar(2) default null,
+  marca_produto varchar(20) default null,
+  preco_unit decimal(9,2) default null,
+  tipo_produto int(11) default null,
+  modelo_sq int(11) not null,
+  qtde_estoque3 int(11) default null,
+  qtde_estoque4 int(11) default null,
+  qtde_estoque5 int(11) default null,
+  qtde_estoque6 int(11) default null,
+  qtde_estoque7 int(11) default null,
+  qtde_estoque8 int(11) default null,
+  peso_bruto decimal(8,2) default null,
+  peso_liquido decimal(8,2) default null,
+  linha_sq int(11) default null,
+  aliq_icms_subst decimal(9,2) default '38.58',
+  origem_mercadoria int(11) default null,
+  descricao_completa blob,
+  codigo_upc varchar(12) default null,
+  codigo_dun varchar(14) default null,
+  largura_liquida decimal(10,2) default null,
+  altura_liquida decimal(10,2) default null,
+  profundidade_liquida decimal(10,2) default null,
+  largura_bruta decimal(10,2) default null,
+  altura_bruta decimal(10,2) default null,
+  profundidade_bruta decimal(10,2) default null,
+  qtde_estoque9 int(11) default null,
+  qtde_estoque10 int(11) default null,
+  primary key (produto_sq),
+  unique key (empresa_sq,codigo_produto),
+  key (modelo_sq),
+  key (ncm_sq),
+  key (linha_sq),
+  key (empresa_sq),
+  constraint foreign key (empresa_sq) references empresa (empresa_sq) on delete no action on update cascade,
+  constraint foreign key (linha_sq) references linha (linha_sq) on delete no action on update cascade,
+  constraint foreign key (modelo_sq) references modelo (modelo_sq) on delete no action on update cascade,
+  constraint foreign key (ncm_sq) references ncm (ncm_sq) on delete no action on update cascade
+) engine=innodb default charset=latin1;
+
+drop table if exists gerad.rma;
+create table  gerad.rma (
+  rma_sq int(11) not null auto_increment,
+  empresa_sq int(11) not null,
+  numero_rma int(11) not null,
+  data_entrada_nf date not null,
+  data_emissao_nf date default null,
+  numero_nf_cliente int(11) default null,
+  nome_cliente varchar(50) not null,
+  endereco_cliente varchar(200) default null,
+  email_cliente varchar(100) default null,
+  telefone_cliente varchar(20) default null,
+  responsavel_cliente varchar(50) default null,
+  nf_compra int(11) default null,
+  data_compra date default null,
+  loja_cliente varchar(100) default null,
+  forma_envio varchar(20) default null,
+  primary key (rma_sq),
+  unique key (empresa_sq,numero_rma),
+  key (empresa_sq),
+  constraint foreign key (empresa_sq) references empresa (empresa_sq) on delete no action on update cascade
+) engine=innodb default charset=latin1;
+
+drop table if exists gerad.rma_item;
+create table  gerad.rma_item (
+  rma_item_sq int(11) not null auto_increment,
+  rma_sq int(11) not null,
+  produto_sq int(11) not null,
+  nr_serie_produto varchar(100) default null,
+  qtde_produto int(11) not null,
+  acessorio_produto varchar(100) default null,
+  vlr_unit_produto decimal(9,2) default null,
+  defeito_produto varchar(100) default null,
+  data_retorno_produto timestamp null default null,
+  nf_devolucao_produto int(11) default null,
+  finalizacao_produto varchar(100) default null,
+  primary key (rma_item_sq),
+  key (rma_sq),
+  key (produto_sq),
+  constraint foreign key (produto_sq) references produto (produto_sq) on delete no action on update cascade,
+  constraint foreign key (rma_sq) references rma (rma_sq) on delete cascade on update cascade
+) engine=innodb default charset=latin1;
+
+drop table if exists gerad.usuario;
+create table  gerad.usuario (
+  usuario_sq int(11) not null auto_increment,
+  empresa_sq int(11) not null,
+  codigo_usuario varchar(20) character set latin1 collate latin1_bin not null,
+  nome_usuario varchar(50) not null,
+  senha_usuario varchar(50) default null,
+  erro_email_from varchar(50) default null,
+  erro_nome_from varchar(50) default null,
+  erro_email_to varchar(50) default null,
+  erro_nome_to varchar(50) default null,
+  erro_smtp varchar(50) default null,
+  erro_username varchar(50) default null,
+  erro_password varchar(50) default null,
+  foto mediumblob,
+  foto_usuario varchar(50) default null,
+  vendedor_sq int(11) default null,
+  primary key (usuario_sq),
+  unique key (empresa_sq,codigo_usuario),
+  key (vendedor_sq),
+  key (empresa_sq),
+  constraint foreign key (empresa_sq) references empresa (empresa_sq) on delete no action on update cascade,
+  constraint foreign key (vendedor_sq) references vendedor (vendedor_sq) on delete no action on update cascade
+) engine=innodb default charset=latin1;
+
+drop table if exists gerad.acesso;
+create table  gerad.acesso (
+  acesso_sq int(11) not null auto_increment,
+  empresa_sq int(11) not null,
+  nome_programa varchar(100) character set latin1 collate latin1_bin not null,
+  usuario_sq int(11) not null,
+  visualizar varchar(1) default null,
+  criar varchar(1) default null,
+  editar varchar(1) default null,
+  apagar varchar(1) default null,
+  primary key  (acesso_sq),
+  unique key (empresa_sq,nome_programa,usuario_sq),
+  key (empresa_sq),
+  constraint foreign key (empresa_sq) references empresa (empresa_sq) on delete no action on update cascade,
+  constraint foreign key (usuario_sq) references usuario (usuario_sq) on delete no action on update cascade
+) engine=innodb default charset=latin1;
+
+drop table if exists gerad.agenda;
+create table  gerad.agenda (
+  agenda_sq int(11) not null auto_increment,
+  empresa_sq int(11) not null,
+  data_agenda timestamp not null default current_timestamp,
+  vendedor_sq int(11) not null,
+  cliente_sq int(11) not null,
+  observacao text,
+  realizado varchar(1) default 'n',
+  usuario_pai_sq int(11) default null,
+  primary key (agenda_sq),
+  unique key (empresa_sq,data_agenda,vendedor_sq),
+  key (cliente_sq),
+  key (vendedor_sq),
+  key (empresa_sq),
+  constraint foreign key (empresa_sq) references empresa (empresa_sq) on delete no action on update cascade,
+  constraint foreign key (cliente_sq) references cliente (cliente_sq) on delete no action on update cascade,
+  constraint foreign key (vendedor_sq) references vendedor (vendedor_sq) on delete no action on update cascade
+) engine=innodb default charset=latin1;
+
+drop table if exists gerad.assistencia;
+create table  gerad.assistencia (
+  assistencia_sq int(11) not null auto_increment,
+  empresa_sq int(11) not null,
+  numero_assistencia int(11) not null,
+  data_chamado timestamp not null default '0000-00-00 00:00:00',
+  data_assistencia timestamp not null default '0000-00-00 00:00:00',
+  cotacao_dolar decimal(9,2) default null,
+  cliente_sq int(11) not null,
+  cond_pagto_sq int(11) default null,
+  desp_chamado decimal(9,2) default null,
+  desp_htec_ad decimal(9,2) default null,
+  desp_desloc decimal(9,2) default null,
+  vlr_pecas decimal(9,2) default null,
+  vlr_total decimal(9,2) default null,
+  hora_inicio time not null,
+  hora_fim time default null,
+  garantia varchar(1) default null,
+  contrato varchar(1) default null,
+  vendedor_sq int(11) not null,
+  frete varchar(1) default null,
+  primary key (assistencia_sq),
+  unique key (empresa_sq,numero_assistencia),
+  key (cliente_sq),
+  key (cond_pagto_sq),
+  key (vendedor_sq),
+  key (empresa_sq),
+  constraint foreign key (empresa_sq) references empresa (empresa_sq) on delete no action on update cascade,
+  constraint foreign key (cliente_sq) references cliente (cliente_sq) on delete no action on update cascade,
+  constraint foreign key (cond_pagto_sq) references cond_pagto (cond_pagto_sq) on delete no action on update cascade,
+  constraint foreign key (vendedor_sq) references vendedor (vendedor_sq) on delete no action on update cascade
+) engine=innodb default charset=latin1;
+
+drop table if exists gerad.assistencia_equip;
+create table  gerad.assistencia_equip (
+  assistencia_equip_sq int(11) not null auto_increment,
+  assistencia_sq int(11) not null,
+  produto_sq int(11) not null,
+  nr_serie_equip text,
+  defeito text,
+  servicos text,
+  primary key (assistencia_equip_sq),
+  key (assistencia_sq),
+  key (produto_sq),
+  constraint foreign key (assistencia_sq) references assistencia (assistencia_sq) on delete cascade on update cascade,
+  constraint foreign key (produto_sq) references produto (produto_sq) on delete no action on update cascade
+) engine=innodb default charset=latin1;
+
+drop table if exists gerad.assistencia_item;
+create table  gerad.assistencia_item (
+  assistencia_item_sq int(11) not null auto_increment,
+  produto_sq int(11) not null,
+  qtde_assistencia_item int(11) not null,
+  preco_unit decimal(9,2) default null,
+  assistencia_equip_sq int(11) not null,
+  primary key (assistencia_item_sq),
+  key (produto_sq),
+  key (assistencia_equip_sq),
+  constraint foreign key (assistencia_equip_sq) references assistencia_equip (assistencia_equip_sq) on delete cascade on update cascade,
+  constraint foreign key (produto_sq) references produto (produto_sq) on delete no action on update cascade
+) engine=innodb default charset=latin1;
+
+drop table if exists gerad.nota_fiscal_entrada;
+create table  gerad.nota_fiscal_entrada (
+  nota_fiscal_entrada_sq int(11) not null auto_increment,
+  empresa_sq int(11) not null,
+  numero_nf_ent int(11) not null,
+  dtemissao_nf_ent timestamp not null default '0000-00-00 00:00:00',
+  cliente_sq int(11) not null,
+  natureza_sq int(11) default null,
+  base_icms decimal(9,2) default null,
+  vlr_icms decimal(9,2) default null,
+  base_icms_subst decimal(9,2) default null,
+  vlr_icms_subst decimal(9,2) default null,
+  vlr_produtos decimal(9,2) default null,
+  vlr_frete decimal(9,2) default null,
+  vlr_seguro decimal(9,2) default null,
+  vlr_desp_acess decimal(9,2) default null,
+  vlr_ipi decimal(9,2) default null,
+  vlr_total decimal(9,2) default null,
+  observacao blob,
+  transferida varchar(1) default 'n',
+  dt_entrada datetime default null,
+  primary key (nota_fiscal_entrada_sq),
+  unique key using btree (empresa_sq,numero_nf_ent,cliente_sq),
+  key (cliente_sq),
+  key (natureza_sq),
+  key (empresa_sq),
+  constraint foreign key (empresa_sq) references empresa (empresa_sq) on delete no action on update cascade,
+  constraint foreign key (cliente_sq) references cliente (cliente_sq) on delete no action on update cascade,
+  constraint foreign key (natureza_sq) references natureza (natureza_sq) on delete no action on update cascade
+) engine=innodb default charset=latin1;
+
+drop table if exists gerad.nota_fiscal_entrada_item;
+create table  gerad.nota_fiscal_entrada_item (
+  nota_fiscal_entrada_item_sq int(11) not null auto_increment,
+  nota_fiscal_entrada_sq int(11) not null,
+  item int(11) not null,
+  produto_sq int(11) default null,
+  nr_serie_item blob,
+  qtde_item int(11) default null,
+  vlr_unit_item decimal(9,2) default null,
+  vlr_total_item decimal(9,2) default null,
+  aliq_icms_item decimal(4,2) default null,
+  aliq_ipi_item decimal(4,2) default null,
+  vlr_icms_item decimal(9,2) default null,
+  vlr_ipi_item decimal(9,2) default null,
+  primary key (nota_fiscal_entrada_item_sq),
+  key (nota_fiscal_entrada_sq),
+  key (produto_sq),
+  constraint foreign key (nota_fiscal_entrada_sq) references nota_fiscal_entrada (nota_fiscal_entrada_sq) on delete cascade on update cascade,
+  constraint foreign key (produto_sq) references produto (produto_sq) on delete no action on update cascade
+) engine=innodb default charset=latin1;
+
+drop table if exists gerad.nota_fiscal_servico;
+create table  gerad.nota_fiscal_servico (
+  nota_fiscal_servico_sq int(11) not null auto_increment,
+  empresa_sq int(11) not null,
+  numero_nf_servico int(11) not null,
+  data_nf_servico timestamp not null default '0000-00-00 00:00:00',
+  cliente_sq int(11) not null,
+  ttl_nf_servico decimal(9,2) not null,
+  aliq_iss_nf_servico decimal(4,2) not null,
+  vlr_iss_nf_servico decimal(9,2) not null,
+  primary key (nota_fiscal_servico_sq),
+  unique key (empresa_sq,numero_nf_servico),
+  key (cliente_sq),
+  key (empresa_sq),
+  constraint foreign key (empresa_sq) references empresa (empresa_sq) on delete no action on update cascade,
+  constraint foreign key (cliente_sq) references cliente (cliente_sq)
+) engine=innodb default charset=latin1;
+
+drop table if exists gerad.nfiscal;
+create table  gerad.nfiscal (
+  nfiscal_sq int(11) not null auto_increment,
+  empresa_sq int(11) not null,
+  numero_nfiscal int(11) not null,
+  dtemissao_nfiscal timestamp not null default '0000-00-00 00:00:00',
+  dtsaida_nfiscal timestamp null default null,
+  pedido_sq int(11) default null,
+  cliente_sq int(11) not null,
+  cond_pagto_sq int(11) not null,
+  natureza_sq int(11) not null,
+  transportadora_sq int(11) not null,
+  base_icms decimal(9,2) default null,
+  vlr_icms decimal(9,2) default null,
+  base_icms_subst decimal(9,2) default null,
+  vlr_icms_subst decimal(9,2) default null,
+  vlr_produtos decimal(9,2) default null,
+  vlr_frete decimal(9,2) default null,
+  vlr_seguro decimal(9,2) default null,
+  vlr_desp_acess decimal(9,2) default null,
+  vlr_ipi decimal(9,2) default null,
+  vlr_total decimal(9,2) default null,
+  frete_transp varchar(1) default null,
+  placa_transp varchar(7) default null,
+  uf_placa_transp varchar(2) default null,
+  qtde_transp int(11) default null,
+  especie_transp varchar(20) default null,
+  marca_transp varchar(30) default null,
+  numero_transp varchar(10) default null,
+  pbruto_transp varchar(20) default null,
+  pliquido_transp varchar(20) default null,
+  class_fiscal1 int(11) default null,
+  class_fiscal2 int(11) default null,
+  class_fiscal3 int(11) default null,
+  class_fiscal4 int(11) default null,
+  class_fiscal5 int(11) default null,
+  class_fiscal6 int(11) default null,
+  class_fiscal7 int(11) default null,
+  mensagem text,
+  cancelada varchar(1) not null,
+  dias_demonstracao int(11) default null,
+  cotacao_dolar decimal(9,4) default null,
+  nr_nfiscal_retorno int(11) default null,
+  dt_nfiscal_retorno timestamp null default null,
+  concluida varchar(1) default null,
+  vendedor_sq int(11) not null,
+  nf_manual varchar(1) default null,
+  retorno_produto varchar(1) default 'n',
+  retorno_observacao text,
+  natureza_ret_dem int(11) default null,
+  linha_sq int(11) default null,
+  class_fiscal8 int(11) default null,
+  class_fiscal9 int(11) default null,
+  class_fiscal10 int(11) default null,
+  class_fiscal11 int(11) default null,
+  class_fiscal12 int(11) default null,
+  class_fiscal13 int(11) default null,
+  class_fiscal14 int(11) default null,
+  class_fiscal15 int(11) default null,
+  class_fiscal16 int(11) default null,
+  class_fiscal17 int(11) default null,
+  class_fiscal18 int(11) default null,
+  class_fiscal19 int(11) default null,
+  class_fiscal20 int(11) default null,
+  class_fiscal21 int(11) default null,
+  class_fiscal22 int(11) default null,
+  class_fiscal23 int(11) default null,
+  class_fiscal24 int(11) default null,
+  inf_adicional varchar(100) default null,
+  nfe_chave varchar(47) default null,
+  nfe_resposta blob,
+  numero_nfe int(11) default null,
+  nfiscal_sq_referencia int(11) default null,
+  recibo_nfe varchar(15) default null,
+  motivo_cancelamento varchar(45) default null,
+  primary key (nfiscal_sq),
+  unique key (empresa_sq,numero_nfiscal),
+  key (cliente_sq),
+  key (cond_pagto_sq),
+  key (natureza_sq),
+  key (transportadora_sq),
+  key (vendedor_sq),
+  key (natureza_ret_dem),
+  key (linha_sq),
+  key (empresa_sq),
+  constraint foreign key (empresa_sq) references empresa (empresa_sq) on delete no action on update cascade,
+  constraint foreign key (cliente_sq) references cliente (cliente_sq) on delete no action on update cascade,
+  constraint foreign key (cond_pagto_sq) references cond_pagto (cond_pagto_sq) on delete no action on update cascade,
+  constraint foreign key (linha_sq) references linha (linha_sq) on delete no action on update cascade,
+  constraint foreign key (natureza_sq) references natureza (natureza_sq) on delete no action on update cascade,
+  constraint foreign key (natureza_ret_dem) references natureza (natureza_sq) on delete no action on update cascade,
+  constraint foreign key (transportadora_sq) references transportadora (transportadora_sq) on delete no action on update cascade,
+  constraint foreign key (vendedor_sq) references vendedor (vendedor_sq) on delete no action on update cascade
+) engine=innodb default charset=latin1;
+
+drop table if exists gerad.nfiscal_item;
+create table  gerad.nfiscal_item (
+  nfiscal_item_sq int(11) not null auto_increment,
+  nfiscal_sq int(11) not null,
+  item int(11) not null,
+  produto_sq int(11) default null,
+  nr_serie_item text,
+  class_fiscal varchar(1) default null,
+  stribut int(11) default null,
+  qtde_item1_old int(11) default null,
+  vlr_unit_item decimal(9,2) default null,
+  vlr_total_item decimal(9,2) default null,
+  aliq_icms_item decimal(4,2) default null,
+  aliq_ipi_item decimal(4,2) default null,
+  vlr_icms_item decimal(9,2) default null,
+  vlr_ipi_item decimal(9,2) default null,
+  peso_bruto decimal(9,2) default null,
+  peso_liquido decimal(9,2) default null,
+  qtde_item2_old int(11) default null,
+  qtde_item3_old int(11) default null,
+  vlr_desc decimal(9,2) default null,
+  pct_desc decimal(5,2) default null,
+  vlr_juros decimal(9,2) default null,
+  pct_juros decimal(5,2) default null,
+  base_icms_subst_item decimal(9,2) default null,
+  vlr_icms_subst_item decimal(9,2) default null,
+  origem_mercadoria int(11) default null,
+  qtde_item4_old int(11) default null,
+  qtde_item5_old int(11) default null,
+  qtde_item6_old int(11) default null,
+  qtde_item7_old int(11) default null,
+  qtde_item8_old int(11) default null,
+  qtde_item9_old int(11) default null,
+  qtde_item10_old int(11) default null,
+  qtde_item int(11) default null,
+  primary key (nfiscal_item_sq),
+  key (nfiscal_sq),
+  key (produto_sq),
+  constraint foreign key (nfiscal_sq) references nfiscal (nfiscal_sq) on delete cascade on update cascade,
+  constraint foreign key (produto_sq) references produto (produto_sq) on delete no action on update cascade
+) engine=innodb default charset=latin1;
+
+drop table if exists gerad.pedido;
+create table  gerad.pedido (
+  pedido_sq int(11) not null auto_increment,
+  empresa_sq int(11) not null,
+  cliente_sq int(11) not null,
+  data_pedido timestamp not null default '0000-00-00 00:00:00',
+  cond_pagto_sq int(11) not null,
+  natureza_sq int(11) not null,
+  cotacao_dolar decimal(9,4) default null,
+  observacao_ped text,
+  observacao_nf text,
+  transportadora_sq int(11) not null,
+  vlr_frete decimal(9,2) default null,
+  frete_transp varchar(1) default null,
+  nfiscal_sq int(11) default null,
+  vlr_desc decimal(9,2) default null,
+  pct_desc decimal(9,2) default null,
+  vlr_icms decimal(9,2) default null,
+  vlr_ipi decimal(9,2) default null,
+  vlr_produtos decimal(9,2) default null,
+  base_icms decimal(9,2) default null,
+  numero_pedido int(11) default null,
+  dias_demonstracao int(11) default null,
+  pct_juros decimal(4,2) default null,
+  vlr_juros decimal(9,2) default null,
+  vendedor_sq int(11) not null,
+  peso_bruto decimal(9,2) default null,
+  peso_liquido decimal(9,2) default null,
+  vlr_seguro decimal(9,2) default null,
+  linha_sq int(11) default null,
+  baixou_estoque char(1) default null,
+  status char(1) default null,
+  primary key (pedido_sq),
+  unique key (empresa_sq,numero_pedido),
+  key (cliente_sq),
+  key (cond_pagto_sq),
+  key (natureza_sq),
+  key (transportadora_sq),
+  key (vendedor_sq),
+  key (linha_sq),
+  key (empresa_sq),
+  constraint foreign key (empresa_sq) references empresa (empresa_sq) on delete no action on update cascade,
+  constraint foreign key (cliente_sq) references cliente (cliente_sq) on delete no action on update cascade,
+  constraint foreign key (cond_pagto_sq) references cond_pagto (cond_pagto_sq) on delete no action on update cascade,
+  constraint foreign key (linha_sq) references linha (linha_sq) on delete no action on update cascade,
+  constraint foreign key (natureza_sq) references natureza (natureza_sq) on delete no action on update cascade,
+  constraint foreign key (transportadora_sq) references transportadora (transportadora_sq) on delete no action on update cascade,
+  constraint foreign key (vendedor_sq) references vendedor (vendedor_sq) on delete no action on update cascade
+) engine=innodb default charset=latin1;
+
+drop table if exists gerad.pedido_item;
+create table  gerad.pedido_item (
+  pedido_item_sq int(11) not null auto_increment,
+  pedido_sq int(11) not null,
+  produto_sq int(11) not null,
+  qtde_pedido_item int(11) not null,
+  nr_serie_item text,
+  preco_unit decimal(9,2) default null,
+  vlr_desc decimal(9,2) default null,
+  pct_desc decimal(9,2) default null,
+  aliq_icms_item decimal(4,2) default null,
+  aliq_ipi_item decimal(4,2) default null,
+  vlr_icms_item decimal(9,2) default null,
+  vlr_ipi_item decimal(9,2) default null,
+  vlr_total_item decimal(9,2) default null,
+  peso_bruto decimal(9,2) default null,
+  peso_liquido decimal(9,2) default null,
+  vlr_juros decimal(9,2) default null,
+  pct_juros decimal(5,2) default null,
+  primary key (pedido_item_sq),
+  key (pedido_sq),
+  key (produto_sq),
+  constraint foreign key (pedido_sq) references pedido (pedido_sq) on delete cascade on update cascade,
+  constraint foreign key (produto_sq) references produto (produto_sq) on delete no action on update cascade
+) engine=innodb default charset=latin1;
+
+drop table if exists gerad.contato;
+create table  gerad.contato (
+  contato_sq int(11) not null auto_increment,
+  empresa_sq int(11) not null,
+  data_contato timestamp not null default current_timestamp on update current_timestamp,
+  cliente_sq int(11) not null,
+  vendedor_sq int(11) not null,
+  observacao text,
+  tipo_contato varchar(1) default null,
+  forma_contato varchar(1) default null,
+  nfiscal_item_sq int(11) default null,
+  qtde_produtos int(11) default '0',
+  primary key (contato_sq),
+  unique key (empresa_sq,data_contato,cliente_sq),
+  key (cliente_sq),
+  key (vendedor_sq),
+  key (nfiscal_item_sq),
+  key (empresa_sq),
+  constraint foreign key (empresa_sq) references empresa (empresa_sq) on delete no action on update cascade,
+  constraint foreign key (cliente_sq) references cliente (cliente_sq) on delete no action on update cascade,
+  constraint foreign key (nfiscal_item_sq) references nfiscal_item (nfiscal_item_sq) on delete set null on update cascade,
+  constraint foreign key (vendedor_sq) references vendedor (vendedor_sq) on delete no action on update cascade
+) engine=innodb default charset=latin1;
+
+drop table if exists gerad.conteiner;
+create table  gerad.conteiner (
+  conteiner_sq int(11) not null auto_increment,
+  empresa_sq int(11) not null,
+  invoice_number varchar(20) not null,
+  data_remessa timestamp not null default '0000-00-00 00:00:00',
+  data_chegada timestamp not null default '0000-00-00 00:00:00',
+  tipo_envio varchar(1) not null,
+  conhecimento varchar(20) default null,
+  observacao text,
+  primary key (conteiner_sq),
+  unique key (empresa_sq,invoice_number),
+  key (empresa_sq),
+  constraint foreign key (empresa_sq) references empresa (empresa_sq) on delete no action on update cascade
+) engine=innodb default charset=latin1;
+
+drop table if exists gerad.conteiner_item;
+create table  gerad.conteiner_item (
+  conteiner_item_sq int(11) not null auto_increment,
+  conteiner_sq int(11) not null,
+  produto_sq int(11) not null,
+  quantidade int(11) not null,
+  primary key (conteiner_item_sq),
+  key (produto_sq),
+  key (conteiner_sq),
+  constraint foreign key (conteiner_sq) references conteiner (conteiner_sq) on delete cascade on update cascade,
+  constraint foreign key (produto_sq) references produto (produto_sq)
+) engine=innodb default charset=latin1;
+
+drop table if exists gerad.conta_receber;
+create table  gerad.conta_receber (
+  conta_receber_sq int(11) not null auto_increment,
+  empresa_sq int(11) not null,
+  numero_duplicata int(11) not null,
+  item_duplicata int(11) not null,
+  seq_duplicata int(11) default null,
+  nfiscal_sq int(11) default null,
+  valor_duplicata decimal(9,2) default null,
+  dtemissao_duplicata datetime not null,
+  dtvencto_duplicata datetime not null,
+  juros_duplicata decimal(10,2) default null,
+  desconto_duplicata decimal(10,2) default null,
+  primary key (conta_receber_sq),
+  unique key (empresa_sq,numero_duplicata,item_duplicata,seq_duplicata),
+  key (nfiscal_sq),
+  key (empresa_sq),
+  constraint foreign key (empresa_sq) references empresa (empresa_sq) on delete no action on update cascade,
+  constraint foreign key (nfiscal_sq) references nfiscal (nfiscal_sq) on delete no action on update cascade
+) engine=innodb default charset=latin1;
+
+drop table if exists gerad.conta_receber_pgto;
+create table  gerad.conta_receber_pgto (
+  conta_receber_pgto_sq int(11) not null auto_increment,
+  conta_receber_sq int(11) not null,
+  dt_pgto datetime not null,
+  valor_pgto decimal(9,2) not null,
+  forma_pgto varchar(10) default null,
+  observacao varchar(100) default null,
+  primary key (conta_receber_pgto_sq),
+  key (conta_receber_sq),
+  constraint foreign key (conta_receber_sq) references conta_receber (conta_receber_sq) on delete cascade on update cascade
+) engine=innodb default charset=latin1;
+
+drop table if exists gerad.historico_alteracao;
+create table  gerad.historico_alteracao (
+  historico_alteracao_sq int(11) not null auto_increment,
+  empresa_sq int(11) not null,
+  nome_tabela varchar(50) not null,
+  chave_sq int(11) not null,
+  tipo_alteracao int(1) not null,
+  usuario_sq int(11) not null,
+  data_alteracao timestamp not null default current_timestamp on update current_timestamp,
+  observacao text,
+  primary key (historico_alteracao_sq),
+  key (usuario_sq),
+  key (empresa_sq),
+  constraint foreign key (empresa_sq) references empresa (empresa_sq) on delete no action on update cascade,
+  constraint foreign key (usuario_sq) references usuario (usuario_sq) on delete no action on update cascade
+) engine=innodb default charset=latin1;
+
+drop table if exists gerad.historico_login;
+create table  gerad.historico_login (
+  historico_login_sq int(11) not null auto_increment,
+  empresa_sq int(11) not null,
+  usuario_sq int(11) not null,
+  data_login timestamp not null default current_timestamp on update current_timestamp,
+  ip_login varchar(15) default null,
+  primary key (historico_login_sq),
+  key (usuario_sq),
+  key (empresa_sq),
+  constraint foreign key (empresa_sq) references empresa (empresa_sq) on delete no action on update cascade,
+  constraint foreign key (usuario_sq) references usuario (usuario_sq) on delete no action on update cascade
+) engine=innodb default charset=latin1;
+
+drop table if exists gerad.kardex;
+create table  gerad.kardex (
+  kardex_sq int(11) not null auto_increment,
+  empresa_sq int(11) not null,
+  produto_sq int(11) default null,
+  tipo_mov varchar(1) default null,
+  qtde int(11) default null,
+  valor decimal(9,2) default null,
+  data timestamp not null default '0000-00-00 00:00:00',
+  nfiscal int(11) default null,
+  usuario_sq int(11) default null,
+  nr_serie text,
+  pedido_item_sq int(11) default null,
+  numero_estoque int(11) default null,
+  primary key (kardex_sq),
+  key (produto_sq),
+  key (usuario_sq),
+  key (pedido_item_sq),
+  key (empresa_sq),
+  constraint foreign key (empresa_sq) references empresa (empresa_sq) on delete no action on update cascade,
+  constraint foreign key (pedido_item_sq) references pedido_item (pedido_item_sq) on delete cascade on update cascade,
+  constraint foreign key (produto_sq) references produto (produto_sq) on delete no action on update cascade,
+  constraint foreign key (usuario_sq) references usuario (usuario_sq) on delete no action on update cascade
+) engine=innodb default charset=latin1;
+
+drop table if exists gerad.produto_faltante;
+create table  gerad.produto_faltante (
+  produto_faltante_sq int(11) not null auto_increment,
+  empresa_sq int(11) not null,
+  produto_sq int(11) not null,
+  qtde_produto_faltante int(11) not null,
+  data_produto_faltante timestamp not null default current_timestamp,
+  nota_fiscal_entrada_sq int(11) default null,
+  cliente_sq int(11) default null,
+  primary key (produto_faltante_sq),
+  key (produto_sq),
+  key (cliente_sq),
+  key (nota_fiscal_entrada_sq),
+  key (empresa_sq),
+  constraint foreign key (empresa_sq) references empresa (empresa_sq) on delete no action on update cascade,
+  constraint foreign key (cliente_sq) references cliente (cliente_sq) on delete set null on update cascade,
+  constraint foreign key (nota_fiscal_entrada_sq) references nota_fiscal_entrada (nota_fiscal_entrada_sq) on delete set null on update cascade,
+  constraint foreign key (produto_sq) references produto (produto_sq) on delete no action on update cascade
+) engine=innodb default charset=latin1;
+

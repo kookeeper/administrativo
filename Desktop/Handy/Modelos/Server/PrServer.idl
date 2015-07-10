@@ -1,0 +1,88 @@
+[
+  uuid(8261428C-B579-450F-A9AD-7C9DB4B52519), 
+  version(1.0), 
+  helpstring("PrServer Library")
+    
+]
+library PrServer
+{
+
+  importlib("midas.dll");
+  importlib("stdole2.tlb");
+
+  [
+    uuid(F230AF25-3471-4CFE-AB30-8A1CD8E9BA43), 
+    version(1.0), 
+    helpstring("Dispatch interface for Server Object"), 
+    dual, 
+    oleautomation
+  ]
+   interface IServer: IAppServer
+  {
+  };
+
+  [
+    uuid(A655A3E7-D825-4A1B-BE06-453254930503), 
+    version(1.0), 
+    helpstring("Server Object")
+  ]
+  coclass Server
+  {
+    [default] interface IServer;
+  };
+
+  [
+    uuid(27539786-90F9-448F-AADD-1D5AE312C612), 
+    version(1.0), 
+    helpstring("Dispatch interface for ServerLista Object"), 
+    dual, 
+    oleautomation
+  ]
+   interface IServerLista: IAppServer
+  {
+    [
+    id(0x0000012D)
+    ]
+    HRESULT _stdcall CriaLista([in] BSTR Sql );
+    [
+    id(0x0000012E)
+    ]
+    HRESULT _stdcall Maximo([in] BSTR Tabela, [in] BSTR Campo, [out, retval] long * Valor );
+    [
+    id(0x0000012F)
+    ]
+    HRESULT _stdcall BuscaProdutos([in] BSTR Sql );
+  };
+
+  [
+    uuid(F42F0CFA-A587-45F4-ACD0-C64157557715), 
+    version(1.0), 
+    helpstring("ServerLista Object")
+  ]
+  coclass ServerLista
+  {
+    [default] interface IServerLista;
+  };
+
+  [
+    uuid(7832A1E0-583C-4A5B-AEA0-533B61E4D888), 
+    version(1.0), 
+    helpstring("Dispatch interface for ServerImpr Object"), 
+    dual, 
+    oleautomation
+  ]
+   interface IServerImpr: IAppServer
+  {
+  };
+
+  [
+    uuid(25DA1343-565C-4793-9C40-FE82C204EE0C), 
+    version(1.0), 
+    helpstring("ServerImpr Object")
+  ]
+  coclass ServerImpr
+  {
+    [default] interface IServerImpr;
+  };
+
+}; 

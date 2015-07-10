@@ -1,0 +1,256 @@
+.listaRegistros {
+     background-color: white;
+     border: 1px solid #000066;
+     font-size :     9pt;
+     margin:     5px;
+     width:95%;
+}
+
+.listaRegistros th {
+     border-right: 1px solid #c8c8ff;
+     padding-left: 2px;
+     padding-right:12px;
+     font-family: arial, helvetica, sans-serif;
+     font-weight: bold;
+     color: white;
+     background-color: #000066;
+     margin-right: 10px;
+     white-space: nowrap;
+}
+
+.listaRegistros  td {
+     font-family: verdana, arial, helvetica, sans-serif;
+     padding-left: 2px;
+}
+
+.listaRegistros tr.total td {
+     white-space: nowrap;
+     vertical-align: top;
+     font-weight: bold;
+     border-top: 1px solid black;
+     padding-bottom: 10px;
+}
+
+.listaRegistros tr.total td.customer {
+     visibility: hidden;
+}
+
+.listaRegistros td.hidden {
+     display: none;
+}
+
+.listaRegistros th.hidden {
+     display: none;
+}
+
+.listaRegistros th.r {
+     text-align: right;
+     padding-right: 10px;
+}
+
+.listaRegistros th.c {
+     text-align: center;
+}
+
+.listaRegistros td.r {
+     text-align: right;
+     padding-right: 10px;
+}
+
+.listaRegistros td.c {
+     text-align: center;
+}
+
+.listaRegistros  tr.odd {
+     background-color: whitesmoke;
+}
+
+.listaRegistros tr.even {
+     background-color: gray;//#d6cfe6;
+}
+
+.listaRegistros th a   ,.listaRegistros th a:visited {
+     text-align: left;
+     color: white;
+}
+
+.listaRegistros th a:hover {
+     color: #ffcc00;
+     background-color: transparent;
+}
+
+.listaRegistros .order1 {
+     background-position: right;
+     background-image: url(../images/arrow_up.gif);
+     background-repeat: no-repeat;
+}
+
+.listaRegistros .order2 {
+     background-position: right;
+     background-image: url(../images/arrow_down.gif);
+     background-repeat: no-repeat;
+}
+
+.pagelinks {
+     color: #999999;
+     margin: 5px;
+}
+
+.pagelinks img {
+     vertical-align: middle;
+}
+
+span.export {
+     padding: 0 4px 1px 20px;
+     font-size: x-small;
+     text-align: center;
+}
+
+span.excel {
+     background-image: url(../images/ico_file_excel.png);
+     background-repeat: no-repeat;
+     width: 16px;
+}
+
+span.csv {
+     background-image: url(../images/ico_file_csv.png);
+     background-repeat: no-repeat;
+     width: 16px;
+}
+
+span.xml {
+     background-image: url(../images/ico_file_xml.png);
+     background-repeat: no-repeat;
+     width: 16px;
+}
+
+span.pdf {
+     background-image: url(../images/ico_file_pdf.png);
+     background-repeat: no-repeat;
+     width: 16px;
+}
+
+span.rtf {
+     background-image: url(../images/ico_file_rtf.png);
+     background-repeat: no-repeat;
+     width: 16px;
+}
+
+.listaRegistros tr.rowMouseOver {
+     background-image: url(../images/selected.gif);
+     background-repeat: repeat-x;
+     background-color: #ffff99;
+}
+/*
+html,body {
+     width: 100%;
+     height: 100%;
+     margin: 0px;
+     font-family: arial, helvetica, sans-serif;
+     font-size: 9pt;
+}
+*/
+.pageHeader {
+     height: 60px;
+     background-image: url(../images/header.gif);
+     background-repeat: repeat-x;
+}
+
+.pageHeaderText {
+     font-size: 30px;
+     margin-left: 5px;
+     color: whitesmoke;
+     font-family: "century gothic", verdana, arial, helvetica, sans-serif;
+     font-weight: bold;
+     text-align: left;
+     display:inline;
+     white-space: nowrap;
+}
+
+.leftMenu {
+     white-space: nowrap;
+     height: 100%;
+     background-color: #d6cfe6;
+     font-family: verdana, arial, helvetica, sans-serif;
+}
+
+.content {
+     width: 100%;
+     padding: 10px;
+}
+
+.rightColumn {
+     width: 3px;
+}
+
+.customer {
+     width: 20%;
+     text-align: left;
+}
+
+.orderNumber {
+     width: 10%;
+     text-align: left;
+}
+
+.orderDate {
+     text-align: center;
+     width: 10%;
+}
+
+.productName {
+     width: 25%;
+}
+
+.quantity {
+     text-align: center;
+     width: 10%;
+}
+
+.lineItemTotal {
+     text-align: right;
+     width: 15%;
+     padding-right:10px;
+}
+
+.logo {
+     border-top: 1px solid #000066;
+     border-left: 1px solid #000066;
+     border-bottom: 1px solid #000066;
+     display:inline;
+     text-align: right;
+}
+
+.code {
+     font-family: verdana, arial, helvetica, "courier new", monospace;
+     font-size: 9pt;
+}
+
+.borderedInline {
+     display: inline;
+     border: 1px solid black;
+}
+
+a:link {
+     color: #000099;
+     text-decoration: none;
+     background-color: transparent;
+     font-weight: bold;
+}
+
+a:visited {
+     color: #000099;
+     text-decoration: none;
+     background-color: transparent;
+     font-weight: bold;
+}
+
+a:hover {
+     color: #d68000;
+     background-color: transparent;
+     font-weight: bold;
+}
+
+img {
+     border: 0px;
+}

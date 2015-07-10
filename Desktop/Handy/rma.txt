@@ -1,0 +1,18 @@
+BR + numero - RMA NO	
+mm/dd/yyyy - Receive Date	
+mm/dd/yyyy - Process Date	
+auto - Repair Center	
+- Customer Name	
+incluir 00 55 - Phone	
+- Model	
+- Serial number	
+- In/Out of Warranty	
+- Quantity	
+- Defected reason	
+- How to repair	
+- Change component	
+- Parts number	
+- Technician	
+- Result	
+Freight	
+- Warraty

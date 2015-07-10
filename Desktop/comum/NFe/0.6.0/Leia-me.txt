@@ -1,0 +1,71 @@
+  P R O J E T O
+
+  Este é um projeto que tem por objetivo desenvolver um conjunto de classes para
+  a leitura e gravação dos arquivos referentes ao Projeto da Nota Fiscal Eletrônica.
+
+
+
+  P R O P O S T A
+
+- Manipular o arquivo XML com sendo um arquivo texto.
+- Possilitar a conversão de XML para TXT e de TXT para XML.
+- Manter a compatibilidade com as versões antigas do Delphi.
+- Liberar os códigos sob os termos da GNU - Lesser General Public License LGPL.
+- A linguagem de programação que será utilizada é o Pascal/Delphi.
+
+
+
+  D I R E T Ó R I O S
+
+- source            -> classes do projeto, o library path do delphi deve apontar esta pasta.
+- source/MunIBGE    -> Arquivos com os nomes dos municípios
+
+
+
+  C O L A B O R A D O R E S
+
+- Celso Lorenzetti / celso@sysrs.com.br
+- Cristiano Aldo Nogueira / caldonogueira@gmail.com
+- Euclides Franco de Rezende / euclas@gmail.com (A)
+- Gildenor Teixeira / gil_denor@ig.com.br
+- Gutierres Santana / gutierres@live.com
+- Jonatas.fischer / Jonatas.fischer@hotmail.com
+- Michel Baldasso / mbmdt@hotmail.com
+- Paulo Casagrande / projetocooperar@zipmail.com.br (coordenador)
+- Rodrigo Bevilacqua Marcondes / rodrigod6@yahoo.com.br
+- Waldir Paim / waldirpaim@gmail.com
+
+  (A) - Pretende disponibilizar tradução do projeto na linguagem DataFlex
+
+  NOTA: Se você colaborou com o projeto e gostaria de ver seu nome incluido na lista de
+        colaboradores solicite pelo email: projetocooperar@zipmail.com.br
+
+
+
+  V E R S Ã O
+
+- pcnAuxiliar         -- Teste/Revisão
+- pcnCabecalho        -- Teste/Revisão/ok
+- pcnCancNFe          -- Teste/Revisão/ok
+- pcnConsCad          -- Teste/Revisão
+- pcnConsReciNFe      -- Teste/Revisão/ok
+- pcnConsSitNFe       -- Teste/Revisão/ok
+- pcnConsStatServ     -- Teste/Revisão/ok
+- pcnConversao        -- Teste/Revisão
+- pcnEnvNFe           -- Teste
+- pcnGerador          -- Teste/Revisão
+- pcnInutNFe          -- Teste/Revisão/ok
+- pcnLayoutTXT        -- Teste/Revisão
+- pcnLeitor           -- Teste/Revisão
+- pcnNFe              -- Teste/Revisão
+- pcnNFeR             -- Teste/Revisão
+- pcnNFeW             -- Teste/Revisão
+- pcnProcNFe          -- Teste/Revisão
+- pcnRetCancNFe       -- Não testado
+- pcnRetConsCad       -- Não testado
+- pcnRetConsReciNFe   -- Não testado
+- pcnRetConsSitNFe    -- Não testado
+- pcnRetConsStatServ  -- Não testado
+- pcnRetEnvNFe        -- Não testado
+- pcnRetInutNFe       -- Não testado
+- pcnSignature        -- Teste/Revisão

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MenuConfig>
+	<Displayers>
+		<Displayer name="CoolMenu"
+		  type="net.sf.navigator.displayer.CoolMenuDisplayer">
+		</Displayer>
+		<Displayer name="TabbedMenu"
+		  type="net.sf.navigator.displayer.TabbedMenuDisplayer">
+		</Displayer>
+	</Displayers>
+	<Menus>
+		<Menu name="arquivo" title="Arquivo">
+			<Item name="sair" title="Sair" page="logout" />
+		</Menu>
+		<Menu name="cadastro" title="Cadastro">
+			<Item name="acessos" title="Acessos" page="pages/acessos/listar" target="conteudo"/>
+			<Item name="agenda" title="Agenda" page="pages/agenda/listar" target="conteudo"/>
+			<Item name="assistencia" title="Assistência" page="pages/assistencias/listar" target="conteudo"/>
+			<Item name="classificacao" title="Classificação" page="pages/classificacao/listar" target="conteudo"/>
+			<Item name="cliente" title="Cliente" page="pages/clientes/listar" target="conteudo"/>
+			<Item name="contato" title="Contato com o cliente" page="pages/contatos/listar" target="conteudo"/>
+			<Item name="conteiner" title="Conteiner" page="pages/conteiner/listar" target="conteudo"/>
+			<Item name="empresa" title="Empresa" page="pages/empresas/listar" target="conteudo"/>
+			<Item name="estado" title="Estado" page="pages/estado/listar" target="conteudo"/>
+			<Item title="Financeiro">
+				<Item name="condPagto" title="Condição de pagamento" page="pages/condPagto/listar" target="conteudo"/>
+				<Item name="contaBanco" title="Conta bancária" page="pages/contaBanco/listar" target="conteudo"/>
+				<Item name="contasPagar" title="Contas a pagar" page="pages/contasPagar/listar" target="conteudo"/>
+				<Item name="contasPagarAuto" title="Contas a pagar - Agendamento" page="pages/contasPagarAuto/listar" target="conteudo"/>
+				<Item name="duplicata" title="Contas a receber" page="pages/duplicatas/listar" target="conteudo"/>
+				<Item name="fornecedor" title="Fornecedor" page="pages/fornecedor/listar" target="conteudo"/>
+			</Item>
+			<Item title="Fiscal">
+				<Item name="natureza" title="Natureza da operação" page="pages/naturezas/listar" target="conteudo"/>
+				<Item name="nfEntrada" title="Nota fiscal de entrada" page="pages/nfEntradas/listar" target="conteudo"/>
+				<Item name="nfServico" title="Nota fiscal de serviço" page="pages/nfServico/listar" target="conteudo"/>
+				<Item name="nfiscal" title="Nota fiscal" page="pages/nfiscais/listar" target="conteudo"/>
+				<Item name="pedido" title="Pedido" page="pages/pedidos/listar" target="conteudo"/>
+			</Item>
+			<Item name="kardex" title="Movimentação no estoque" page="pages/kardex/listar" target="conteudo"/>
+			<Item name="linha" title="Linha" page="pages/linha/listar" target="conteudo"/>
+			<Item name="modelo" title="Modelo" page="pages/modelos/listar" target="conteudo"/>
+			<Item name="nbm" title="N.C.M." page="pages/mbm/listar" target="conteudo"/>
+			<Item name="produto" title="Produto" page="pages/produtos/listar" target="conteudo"/>
+			<Item name="produtoFaltante" title="Produto faltante" page="pages/produtosFaltantes/listar" target="conteudo"/>
+			<Item name="rma" title="R.M.A." page="pages/rma/listar" target="conteudo"/>
+			<Item name="tipoCliente" title="Tipo de cliente" page="pages/tipoCliente/listar" target="conteudo"/>
+			<Item name="transportadora" title="Transportadora" page="pages/transportadoras/listar" target="conteudo"/>
+			<Item name="usuario" title="Usuario" page="pages/usuarios/listar" target="conteudo"/>
+			<Item name="vendedor" title="Vendedor" page="pages/vendedores/listar" target="conteudo"/>
+		</Menu>
+	</Menus>
+</MenuConfig>

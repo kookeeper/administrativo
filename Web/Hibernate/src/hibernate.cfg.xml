@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+		"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+		"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory name="hibernateProperties">
+        <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+        <property name="hibernate.connection.password">avision</property>
+	    <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/handy</property>
+        <property name="hibernate.connection.username">avision</property>
+<!--
+        <property name="hibernate.connection.url">jdbc:mysql://spsamaan.heliohost.org:3306/spsamaan_adm</property>
+        <property name="hibernate.connection.username">spsamaan_avision</property>
+-->	    
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+
+        <property name="connection.pool_size">1</property>
+        <property name="show_sql">true</property>
+        <property name="hibernate.format_sql">true</property>
+<!--         
+		<property name="connection.autocommit">true</property>        
+
+        <property name="show_sql">true</property>
+        <property name="hibernate.format_sql">true</property>
+
+    	<property name="hibernate.transaction.manager_lookup_class">org.hibernate.transaction.JBossTransactionManagerLookup</property>
+        <property name="hibernate.transaction.factory_class">org.hibernate.transaction.JTATransactionFactory</property>
+		<property name="hibernate.current_session_context_class">jta</property>
+-->   
+		<property name="hibernate.transaction.factory_class">org.hibernate.transaction.JDBCTransactionFactory</property>
+<!-- 
+ 		<property name="hibernate.current_session_context_class">thread</property>
+ -->
+        <mapping class="br.com.msystem.vo.Clientes"/>
+        <mapping class="br.com.msystem.vo.Classificacao"/>
+        <mapping class="br.com.msystem.vo.TipoCliente"/>
+        <mapping class="br.com.msystem.vo.Transportadoras"/>
+        <mapping class="br.com.msystem.vo.Vendedores"/>
+        <mapping class="br.com.msystem.vo.Agenda"/>
+        <mapping class="br.com.msystem.vo.Assistencias"/>
+        <mapping class="br.com.msystem.vo.CondPagto"/>
+        <mapping class="br.com.msystem.vo.ContasPagarAuto"/>
+        <mapping class="br.com.msystem.vo.Contatos"/>
+        <mapping class="br.com.msystem.vo.PedidosItensSerie"/>
+        <mapping class="br.com.msystem.vo.ProdutoNumeroSerie"/>
+        <mapping class="br.com.msystem.vo.NfiscaisItensAdicao"/>
+        <mapping class="br.com.msystem.vo.NfiscaisItensSerie"/>
+        <mapping class="br.com.msystem.vo.NfiscaisItens"/>
+        <mapping class="br.com.msystem.vo.CartaCorrecao"/>
+        <mapping class="br.com.msystem.vo.Nfiscais"/>
+        <mapping class="br.com.msystem.vo.Balanco"/>
+        <mapping class="br.com.msystem.vo.BalancoContagem"/>
+        <mapping class="br.com.msystem.vo.BalancoContagemProduto"/>
+        <mapping class="br.com.msystem.vo.ProdutoImagem"/>
+        <mapping class="br.com.msystem.vo.Produtos"/>
+        <mapping class="br.com.msystem.vo.Linha"/>
+        <mapping class="br.com.msystem.vo.Naturezas"/>
+        <mapping class="br.com.msystem.vo.Modelos"/>
+        <mapping class="br.com.msystem.vo.Nbm"/>
+        <mapping class="br.com.msystem.vo.NfEntradas"/>
+        <mapping class="br.com.msystem.vo.NfServicos"/>
+        <mapping class="br.com.msystem.vo.Pedidos"/>
+        <mapping class="br.com.msystem.vo.ProdutosFaltantes"/>
+        <mapping class="br.com.msystem.vo.Usuarios"/>
+        <mapping class="br.com.msystem.vo.AssistenciasEquips"/>
+        <mapping class="br.com.msystem.vo.Duplicatas"/>
+        <mapping class="br.com.msystem.vo.AssistenciasItens"/>
+        <mapping class="br.com.msystem.vo.ConteinerItens"/>
+        <mapping class="br.com.msystem.vo.Conteiner"/>
+        <mapping class="br.com.msystem.vo.Kardex"/>
+        <mapping class="br.com.msystem.vo.PedidosItens"/>
+        <mapping class="br.com.msystem.vo.NfEntradasItens"/>
+        <mapping class="br.com.msystem.vo.RmaItem"/>
+        <mapping class="br.com.msystem.vo.Rma"/>
+        <mapping class="br.com.msystem.vo.EstadoIva"/>
+        <mapping class="br.com.msystem.vo.Estado"/>
+        <mapping class="br.com.msystem.vo.HistAlteracoes"/>
+        <mapping class="br.com.msystem.vo.HistoricoLogin"/>
+        <mapping class="br.com.msystem.vo.DuplicatasPgto"/>
+        <mapping class="br.com.msystem.vo.Empresas"/>
+        <mapping class="br.com.msystem.vo.HistoricoAcesso"/>
+        <mapping class="br.com.msystem.vo.Acessos"/>
+    </session-factory>
+</hibernate-configuration>

@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd" >
+
+<hibernate-reverse-engineering>
+	<type-mapping>
+<sql-type jdbc-type="CHAR" hibernate-type="char" length="1" not-null="true"></sql-type>
+<sql-type jdbc-type="CHAR" hibernate-type="java.lang.Character" length="1" not-null="false"></sql-type>
+<sql-type jdbc-type="CHAR" hibernate-type="string" length="2" not-null="true"></sql-type>
+<sql-type jdbc-type="DATE" hibernate-type="date" length="10" not-null="false"></sql-type>
+<sql-type jdbc-type="DATE" hibernate-type="date" length="10" not-null="true"></sql-type>
+<sql-type jdbc-type="DECIMAL" hibernate-type="big_decimal" precision="10" not-null="false"></sql-type>
+<sql-type jdbc-type="DECIMAL" hibernate-type="big_decimal" precision="4" not-null="false"></sql-type>
+<sql-type jdbc-type="DECIMAL" hibernate-type="big_decimal" precision="4" not-null="true"></sql-type>
+<sql-type jdbc-type="DECIMAL" hibernate-type="big_decimal" precision="5" not-null="false"></sql-type>
+<sql-type jdbc-type="DECIMAL" hibernate-type="big_decimal" precision="5" not-null="true"></sql-type>
+<sql-type jdbc-type="DECIMAL" hibernate-type="big_decimal" precision="9" not-null="false"></sql-type>
+<sql-type jdbc-type="DECIMAL" hibernate-type="big_decimal" precision="9" not-null="true"></sql-type>
+<sql-type jdbc-type="DECIMAL" hibernate-type="java.lang.Short" precision="4" not-null="false"></sql-type>
+<sql-type jdbc-type="INTEGER" hibernate-type="int" not-null="true"></sql-type>
+<sql-type jdbc-type="INTEGER" hibernate-type="java.lang.Integer" not-null="false"></sql-type>
+<sql-type jdbc-type="TIME" hibernate-type="time" length="8" not-null="false"></sql-type>
+<sql-type jdbc-type="TIME" hibernate-type="time" length="8" not-null="true"></sql-type>
+<sql-type jdbc-type="TIMESTAMP" hibernate-type="timestamp" length="19" not-null="false"></sql-type>
+<sql-type jdbc-type="TIMESTAMP" hibernate-type="timestamp" length="19" not-null="true"></sql-type>
+<sql-type jdbc-type="VARCHAR" hibernate-type="string" length="1" not-null="false"></sql-type>
+<sql-type jdbc-type="VARCHAR" hibernate-type="string" length="1" not-null="true"></sql-type>
+<sql-type jdbc-type="VARCHAR" hibernate-type="string" length="2" not-null="false"></sql-type>
+<sql-type jdbc-type="VARCHAR" hibernate-type="string" length="2" not-null="true"></sql-type>
+<sql-type jdbc-type="VARCHAR" hibernate-type="string" length="4" not-null="false"></sql-type>
+<sql-type jdbc-type="VARCHAR" hibernate-type="string" length="4" not-null="true"></sql-type>
+<sql-type jdbc-type="VARCHAR" hibernate-type="string" length="7" not-null="false"></sql-type>
+<sql-type jdbc-type="VARCHAR" hibernate-type="string" length="8" not-null="false"></sql-type>
+<sql-type jdbc-type="VARCHAR" hibernate-type="string"></sql-type>
+<sql-type jdbc-type="VARCHAR" hibernate-type="string" length="10" not-null="false"></sql-type>
+<sql-type jdbc-type="VARCHAR" hibernate-type="string" length="10" not-null="true"></sql-type>
+<sql-type jdbc-type="VARCHAR" hibernate-type="string" length="100" not-null="false"></sql-type>
+<sql-type jdbc-type="VARCHAR" hibernate-type="string" length="100" not-null="true"></sql-type>
+<sql-type jdbc-type="VARCHAR" hibernate-type="string" length="1000" not-null="false"></sql-type>
+<sql-type jdbc-type="VARCHAR" hibernate-type="string" length="1000" not-null="true"></sql-type>
+<sql-type jdbc-type="VARCHAR" hibernate-type="string" length="12" not-null="false"></sql-type>
+<sql-type jdbc-type="VARCHAR" hibernate-type="string" length="14" not-null="false"></sql-type>
+<sql-type jdbc-type="VARCHAR" hibernate-type="string" length="14" not-null="true"></sql-type>
+<sql-type jdbc-type="VARCHAR" hibernate-type="string" length="15" not-null="false"></sql-type>
+<sql-type jdbc-type="VARCHAR" hibernate-type="string" length="15" not-null="true"></sql-type>
+<sql-type jdbc-type="VARCHAR" hibernate-type="string" length="20" not-null="false"></sql-type>
+<sql-type jdbc-type="VARCHAR" hibernate-type="string" length="20" not-null="true"></sql-type>
+<sql-type jdbc-type="VARCHAR" hibernate-type="string" length="200" not-null="false"></sql-type>
+<sql-type jdbc-type="VARCHAR" hibernate-type="string" length="200" not-null="true"></sql-type>
+<sql-type jdbc-type="VARCHAR" hibernate-type="string" length="30" not-null="false"></sql-type>
+<sql-type jdbc-type="VARCHAR" hibernate-type="string" length="30" not-null="true"></sql-type>
+<sql-type jdbc-type="VARCHAR" hibernate-type="string" length="44" not-null="true"></sql-type>
+<sql-type jdbc-type="VARCHAR" hibernate-type="string" length="45" not-null="false"></sql-type>
+<sql-type jdbc-type="VARCHAR" hibernate-type="string" length="47" not-null="false"></sql-type>
+<sql-type jdbc-type="VARCHAR" hibernate-type="string" length="50" not-null="false"></sql-type>
+<sql-type jdbc-type="VARCHAR" hibernate-type="string" length="50" not-null="true"></sql-type>
+<sql-type jdbc-type="VARCHAR" hibernate-type="string" length="60" not-null="false"></sql-type>
+<sql-type jdbc-type="LONGVARBINARY" hibernate-type="binary" not-null="false"></sql-type>
+<sql-type jdbc-type="LONGVARBINARY" hibernate-type="binary" not-null="true"></sql-type>
+<sql-type jdbc-type="LONGVARCHAR" hibernate-type="string" length="65535" not-null="false"></sql-type>
+	</type-mapping>
+	<table-filter match-catalog="handy" match-name="acessos" />
+	<table-filter match-catalog="handy" match-name="agenda" />
+	<table-filter match-catalog="handy" match-name="assistencias" />
+	<table-filter match-catalog="handy"
+		match-name="assistencias_equips" />
+	<table-filter match-catalog="handy" match-name="assistencias_itens" />
+	<table-filter match-catalog="handy" match-name="balanco" />
+	<table-filter match-catalog="handy" match-name="balanco_contagem" />
+	<table-filter match-catalog="handy"
+		match-name="balanco_contagem_produto" />
+	<table-filter match-catalog="handy" match-name="carta_correcao" />
+	<table-filter match-catalog="handy" match-name="classificacao" />
+	<table-filter match-catalog="handy" match-name="clientes" />
+	<table-filter match-catalog="handy" match-name="cond_pagto" />
+	<table-filter match-catalog="handy" match-name="conta_banco" />
+	<table-filter match-catalog="handy" match-name="contas_pagar" />
+	<table-filter match-catalog="handy" match-name="contas_pagar_auto" />
+	<table-filter match-catalog="handy" match-name="contas_pagar_pgto" />
+	<table-filter match-catalog="handy" match-name="contatos" />
+	<table-filter match-catalog="handy" match-name="conteiner" />
+	<table-filter match-catalog="handy" match-name="conteiner_itens" />
+	<table-filter match-catalog="handy" match-name="duplicatas" />
+	<table-filter match-catalog="handy" match-name="duplicatas_pgto" />
+	<table-filter match-catalog="handy" match-name="empresas" />
+	<table-filter match-catalog="handy" match-name="estado" />
+	<table-filter match-catalog="handy" match-name="estado_iva" />
+	<table-filter match-catalog="handy" match-name="fornecedor" />
+	<table-filter match-catalog="handy" match-name="hist_alteracoes" />
+	<table-filter match-catalog="handy" match-name="historico_acesso" />
+	<table-filter match-catalog="handy" match-name="historico_login" />
+	<table-filter match-catalog="handy" match-name="kardex" />
+	<table-filter match-catalog="handy" match-name="linha" />
+	<table-filter match-catalog="handy" match-name="modelos" />
+	<table-filter match-catalog="handy" match-name="naturezas" />
+	<table-filter match-catalog="handy" match-name="nbm" />
+	<table-filter match-catalog="handy" match-name="nf_entradas" />
+	<table-filter match-catalog="handy" match-name="nf_entradas_itens" />
+	<table-filter match-catalog="handy" match-name="nf_servicos" />
+	<table-filter match-catalog="handy" match-name="nfiscais" />
+	<table-filter match-catalog="handy" match-name="nfiscais_itens" />
+	<table-filter match-catalog="handy"
+		match-name="nfiscais_itens_adicao" />
+	<table-filter match-catalog="handy"
+		match-name="nfiscais_itens_serie" />
+	<table-filter match-catalog="handy" match-name="notificacao" />
+	<table-filter match-catalog="handy" match-name="pedidos" />
+	<table-filter match-catalog="handy" match-name="pedidos_itens" />
+	<table-filter match-catalog="handy"
+		match-name="pedidos_itens_serie" />
+	<table-filter match-catalog="handy" match-name="produto_imagem" />
+	<table-filter match-catalog="handy"
+		match-name="produto_numero_serie" />
+	<table-filter match-catalog="handy" match-name="produtos" />
+	<table-filter match-catalog="handy" match-name="produtos_faltantes" />
+	<table-filter match-catalog="handy" match-name="rma" />
+	<table-filter match-catalog="handy" match-name="rma_item" />
+	<table-filter match-catalog="handy" match-name="tipo_cliente" />
+	<table-filter match-catalog="handy" match-name="transportadoras" />
+	<table-filter match-catalog="handy" match-name="usuarios" />
+	<table-filter match-catalog="handy" match-name="vendedores" />
+</hibernate-reverse-engineering>
